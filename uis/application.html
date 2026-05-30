@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HealthCore | Application Form</title>
+  <meta name="description" content="HealthCore patient enquiry application form.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="./validation.js" defer></script>
+</head>
+<body class="bg-slate-50 text-slate-900 antialiased">
+  <main class="max-w-4xl mx-auto px-4 py-10 sm:px-6 lg:px-8">
+    <header class="mb-8">
+      <a href="./index.html" class="inline-flex items-center text-blue-700 hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-400 rounded">
+        <span aria-hidden="true" class="mr-2">&larr;</span>
+        Back to landing page
+      </a>
+      <h1 class="mt-4 text-3xl sm:text-4xl font-bold text-blue-900">Application/Sign-up Form</h1>
+      <p class="mt-3 text-lg text-slate-700">Complete this patient enquiry form and our front desk will contact you to confirm an appointment.</p>
+    </header>
+
+    <section class="bg-white border border-slate-200 rounded-2xl shadow-sm p-5 sm:p-8">
+      <form id="patient-enquiry-form" class="space-y-7" novalidate>
+        <fieldset class="space-y-4">
+          <legend class="text-xl font-semibold text-blue-800">Contact details</legend>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label for="first_name" class="block font-semibold mb-1">First name</label>
+              <input id="first_name" name="first_name" type="text" minlength="2" maxlength="50" required pattern="[A-Za-zÁÉÍÓÚÑÜáéíóúñü ]+" class="w-full min-h-12 px-3.5 py-2.5 border border-slate-300 rounded-md text-base bg-white focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="e.g. Ana">
+              <span id="error-first_name" class="block mt-1 text-sm text-red-600"></span>
+            </div>
+            <div>
+              <label for="last_name" class="block font-semibold mb-1">Last name</label>
+              <input id="last_name" name="last_name" type="text" minlength="2" maxlength="50" required pattern="[A-Za-zÁÉÍÓÚÑÜáéíóúñü ]+" class="w-full min-h-12 px-3.5 py-2.5 border border-slate-300 rounded-md text-base bg-white focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="e.g. Garcia">
+              <span id="error-last_name" class="block mt-1 text-sm text-red-600"></span>
+            </div>
+          </div>
+
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label for="date_of_birth" class="block font-semibold mb-1">Date of birth</label>
+              <input id="date_of_birth" name="date_of_birth" type="date" required class="w-full min-h-12 px-3.5 py-2.5 border border-slate-300 rounded-md text-base bg-white focus:outline-none focus:ring-2 focus:ring-blue-400">
+              <span id="error-date_of_birth" class="block mt-1 text-sm text-red-600"></span>
+            </div>
+            <div>
+              <label for="email" class="block font-semibold mb-1">Email address</label>
+              <input id="email" name="email" type="email" required class="w-full min-h-12 px-3.5 py-2.5 border border-slate-300 rounded-md text-base bg-white focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="e.g. name@provider.com">
+              <span id="error-email" class="block mt-1 text-sm text-red-600"></span>
+            </div>
+          </div>
+
+          <div>
+            <label for="phone" class="block font-semibold mb-1">Phone number</label>
+            <input id="phone" name="phone" type="tel" required class="w-full min-h-12 px-3.5 py-2.5 border border-slate-300 rounded-md text-base bg-white focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="e.g. +1 305 555 0191">
+            <span id="error-phone" class="block mt-1 text-sm text-red-600"></span>
+          </div>
+        </fieldset>
+
+        <fieldset class="space-y-4">
+          <legend class="text-xl font-semibold text-blue-800">Visit preferences</legend>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label for="preferred_language" class="block font-semibold mb-1">Preferred language</label>
+              <select id="preferred_language" name="preferred_language" required class="w-full min-h-12 px-3.5 py-2.5 border border-slate-300 rounded-md text-base bg-white focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <option value="" selected disabled>Select language</option>
+                <option value="English">English</option>
+                <option value="Spanish">Spanish</option>
+              </select>
+              <span id="error-preferred_language" class="block mt-1 text-sm text-red-600"></span>
+            </div>
+            <div>
+              <label for="preferred_clinic" class="block font-semibold mb-1">Preferred clinic</label>
+              <select id="preferred_clinic" name="preferred_clinic" required class="w-full min-h-12 px-3.5 py-2.5 border border-slate-300 rounded-md text-base bg-white focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <option value="" selected disabled>Select clinic</option>
+                <option value="HealthCore Austin Central">HealthCore Austin Central</option>
+                <option value="HealthCore Austin North">HealthCore Austin North</option>
+                <option value="HealthCore San Antonio">HealthCore San Antonio</option>
+                <option value="HealthCore Miami">HealthCore Miami</option>
+                <option value="HealthCore Orlando">HealthCore Orlando</option>
+                <option value="HealthCore Atlanta">HealthCore Atlanta</option>
+              </select>
+              <span id="error-preferred_clinic" class="block mt-1 text-sm text-red-600"></span>
+            </div>
+          </div>
+
+          <div class="grid gap-4 sm:grid-cols-2">
+            <div>
+              <label for="preferred_date" class="block font-semibold mb-1">Preferred date</label>
+              <input id="preferred_date" name="preferred_date" type="date" required class="w-full min-h-12 px-3.5 py-2.5 border border-slate-300 rounded-md text-base bg-white focus:outline-none focus:ring-2 focus:ring-blue-400">
+              <span id="error-preferred_date" class="block mt-1 text-sm text-red-600"></span>
+            </div>
+            <div>
+              <label for="preferred_time" class="block font-semibold mb-1">Preferred time of day</label>
+              <select id="preferred_time" name="preferred_time" required class="w-full min-h-12 px-3.5 py-2.5 border border-slate-300 rounded-md text-base bg-white focus:outline-none focus:ring-2 focus:ring-blue-400">
+                <option value="" selected disabled>Select time</option>
+                <option value="Morning">Morning (7am-12pm)</option>
+                <option value="Afternoon">Afternoon (12pm-5pm)</option>
+                <option value="Evening">Evening (5pm-8pm)</option>
+              </select>
+              <span id="error-preferred_time" class="block mt-1 text-sm text-red-600"></span>
+              <span id="warning-evening-availability" class="hidden mt-1 text-sm text-amber-700">Evening appointments may be limited at this clinic. Our team will confirm the nearest available slot.</span>
+            </div>
+          </div>
+
+          <div>
+            <label for="service_type" class="block font-semibold mb-1">Service needed</label>
+            <select id="service_type" name="service_type" required class="w-full min-h-12 px-3.5 py-2.5 border border-slate-300 rounded-md text-base bg-white focus:outline-none focus:ring-2 focus:ring-blue-400">
+              <option value="" selected disabled>Select service</option>
+              <option value="Primary Care">Primary Care</option>
+              <option value="Chronic Disease Management">Chronic Disease Management</option>
+              <option value="Specialist Consultation">Specialist Consultation</option>
+              <option value="Preventive Health">Preventive Health</option>
+              <option value="Women's Health">Women's Health</option>
+              <option value="Paediatric Care">Paediatric Care</option>
+              <option value="Mental Health">Mental Health</option>
+            </select>
+            <span id="error-service_type" class="block mt-1 text-sm text-red-600"></span>
+          </div>
+        </fieldset>
+
+        <fieldset class="space-y-4">
+          <legend class="text-xl font-semibold text-blue-800">History and insurance</legend>
+          <div>
+            <span class="block font-semibold mb-1">Is this your first visit to HealthCore?</span>
+            <div class="flex flex-wrap items-center gap-6">
+              <label class="inline-flex items-center gap-2">
+                <input type="radio" name="new_patient" value="Yes" required>
+                <span>Yes</span>
+              </label>
+              <label class="inline-flex items-center gap-2">
+                <input type="radio" name="new_patient" value="No" required>
+                <span>No</span>
+              </label>
+            </div>
+            <span id="error-new_patient" class="block mt-1 text-sm text-red-600"></span>
+          </div>
+
+          <div id="patient-id-field" class="hidden">
+            <label for="patient_id" class="block font-semibold mb-1">Patient ID (if returning)</label>
+            <input id="patient_id" name="patient_id" type="text" pattern="HC-[A-Za-z0-9]{6}" class="w-full min-h-12 px-3.5 py-2.5 border border-slate-300 rounded-md text-base bg-white focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="e.g. HC-A3F291">
+            <span id="error-patient_id" class="block mt-1 text-sm text-red-600"></span>
+          </div>
+
+          <div>
+            <span class="block font-semibold mb-1">Do you have health insurance?</span>
+            <div class="flex flex-wrap items-center gap-6">
+              <label class="inline-flex items-center gap-2">
+                <input type="radio" name="has_insurance" value="Yes" required>
+                <span>Yes</span>
+              </label>
+              <label class="inline-flex items-center gap-2">
+                <input type="radio" name="has_insurance" value="No" required>
+                <span>No</span>
+              </label>
+            </div>
+            <span id="error-has_insurance" class="block mt-1 text-sm text-red-600"></span>
+          </div>
+
+          <div id="insurance-fields" class="hidden grid gap-4 sm:grid-cols-2">
+            <div>
+              <label for="insurance_provider" class="block font-semibold mb-1">Insurance provider</label>
+              <input id="insurance_provider" name="insurance_provider" type="text" maxlength="100" class="w-full min-h-12 px-3.5 py-2.5 border border-slate-300 rounded-md text-base bg-white focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="e.g. BlueCross">
+              <span id="error-insurance_provider" class="block mt-1 text-sm text-red-600"></span>
+            </div>
+            <div>
+              <label for="insurance_member_id" class="block font-semibold mb-1">Member ID</label>
+              <input id="insurance_member_id" name="insurance_member_id" type="text" minlength="6" maxlength="20" class="w-full min-h-12 px-3.5 py-2.5 border border-slate-300 rounded-md text-base bg-white focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="e.g. 12345678">
+              <span id="error-insurance_member_id" class="block mt-1 text-sm text-red-600"></span>
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="space-y-4">
+          <legend class="text-xl font-semibold text-blue-800">Your health concern</legend>
+          <div>
+            <label for="health_concern" class="block font-semibold mb-1">Brief description of your health concern</label>
+            <textarea id="health_concern" name="health_concern" rows="4" minlength="20" maxlength="500" required class="w-full min-h-12 px-3.5 py-2.5 border border-slate-300 rounded-md text-base bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none" placeholder="e.g. I have had a persistent cough for 2 weeks"></textarea>
+            <div class="mt-1 flex items-center justify-between">
+              <span id="error-health_concern" class="text-sm text-red-600"></span>
+              <span id="health_concern_counter" class="text-sm text-slate-500">0/500</span>
+            </div>
+          </div>
+        </fieldset>
+
+        <div>
+          <label for="contact_consent" class="inline-flex items-center gap-2">
+            <input id="contact_consent" name="contact_consent" type="checkbox" required>
+            <span>I consent to HealthCore contacting me</span>
+          </label>
+          <span id="error-contact_consent" class="block mt-1 text-sm text-red-600"></span>
+        </div>
+
+        <div class="rounded-md bg-blue-50 border-l-4 border-blue-400 p-4 text-sm text-blue-900">
+          Are you a healthcare provider or organisation looking to partner with HealthCore? Contact our operations team at
+          <a href="mailto:partnerships@healthcore.com" class="underline text-blue-700">partnerships@healthcore.com</a>
+        </div>
+
+        <div class="grid gap-3 sm:grid-cols-2">
+          <button id="clear-enquiry-form" type="reset" class="w-full bg-white text-blue-700 text-lg font-semibold py-3 rounded border border-blue-300 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-400">Clear form</button>
+          <button type="submit" class="w-full bg-blue-700 text-white text-lg font-semibold py-3 rounded shadow hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-400">Submit enquiry</button>
+        </div>
+
+        <div id="form-success-message" class="hidden rounded-md bg-green-50 border-l-4 border-green-400 p-5 text-green-900 text-base"></div>
+      </form>
+    </section>
+  </main>
+</body>
+</html>

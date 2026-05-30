@@ -8,3 +8,18 @@ Each subfolder inside `uis/` must correspond to **one specific user interface** 
 - **Recommendation**: document in this file (or in sub-READMEs) the applications you add, their objective, the technology used, and how to run them.
 
 > _Spanish version: [README.es.md](./README.es.md)._
+
+## Run Locally (Codespaces)
+
+Use this command from the repository root to serve the landing page:
+
+```bash
+npx --yes serve uis -l 5500
+```
+
+Then open `http://localhost:5500` (or the forwarded port URL in Codespaces).
+
+## Files Added For Form Evaluation
+
+- [application.html](application.html): standalone patient application/sign-up form using semantic HTML and Tailwind.
+- [validation.js](validation.js): client-side validation logic (real-time checks, specific errors, submit prevention, success simulation).
