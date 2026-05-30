@@ -30,7 +30,7 @@
         <a href="#services" class="nav-link font-medium hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 rounded" data-lang-en="Services" data-lang-es="Servicios">Services</a>
         <a href="#locations" class="nav-link font-medium hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 rounded" data-lang-en="Locations" data-lang-es="Ubicaciones">Locations</a>
         <a href="#contact" class="nav-link font-medium hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 rounded" data-lang-en="Contact" data-lang-es="Contacto">Contact</a>
-        <button type="button" id="navbar-appointment-btn" class="nav-link font-medium hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 rounded" data-lang-en="Request appointment" data-lang-es="Solicitar cita">Request appointment</button>
+        <a href="./application.html" id="navbar-appointment-btn" class="nav-link font-medium hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400 rounded" data-lang-en="Request appointment" data-lang-es="Solicitar cita">Request appointment</a>
       </nav>
       <div class="hidden md:flex items-center space-x-2 md:space-x-3">
         <button data-set-lang="en" class="lang-toggle px-3 py-2 rounded text-blue-700 font-semibold border border-blue-700 bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-400" aria-pressed="true">EN</button>
@@ -53,7 +53,7 @@
         <li><a href="#services" class="block py-2 px-2 rounded hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-400" data-lang-en="Services" data-lang-es="Servicios">Services</a></li>
         <li><a href="#locations" class="block py-2 px-2 rounded hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-400" data-lang-en="Locations" data-lang-es="Ubicaciones">Locations</a></li>
         <li><a href="#contact" class="block py-2 px-2 rounded hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-400" data-lang-en="Contact" data-lang-es="Contacto">Contact</a></li>
-        <li><button type="button" id="mobile-navbar-appointment-btn" class="block w-full text-left py-2 px-2 rounded hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-400" data-lang-en="Request appointment" data-lang-es="Solicitar cita">Request appointment</button></li>
+        <li><a href="./application.html" id="mobile-navbar-appointment-btn" class="block w-full text-left py-2 px-2 rounded hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-400" data-lang-en="Request appointment" data-lang-es="Solicitar cita">Request appointment</a></li>
       </ul>
     </nav>
   </header>
@@ -77,10 +77,10 @@
           data-rotate-es-4="La atención que necesita cuando la necesita">
           12 outpatient clinics across the US and US
         </p>
-        <button type="button" id="open-appointment-modal" class="group w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-700 to-blue-500 text-white text-base sm:text-lg font-semibold px-6 sm:px-10 py-3 sm:py-4 rounded-full shadow-lg hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all duration-200 animate-pulse motion-reduce:animate-none" data-lang-en="Request an appointment" data-lang-es="Solicitar una cita">
+        <a href="./application.html" id="open-appointment-modal" class="group w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-gradient-to-r from-blue-700 to-blue-500 text-white text-base sm:text-lg font-semibold px-6 sm:px-10 py-3 sm:py-4 rounded-full shadow-lg hover:scale-105 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all duration-200 animate-pulse motion-reduce:animate-none" data-lang-en="Request an appointment" data-lang-es="Solicitar una cita">
           <span aria-hidden="true">&#x1F4DD;</span>
           <span>Request an appointment</span>
-        </button>
+        </a>
       </div>
     </section>
 
@@ -249,187 +249,6 @@
       </div>
     </section>
 
-    <!-- Enquiry Form Modal -->
-    <div id="appointment-modal" class="fixed inset-0 z-50 hidden" role="dialog" aria-modal="true" aria-labelledby="appointment-modal-title">
-      <div id="appointment-modal-backdrop" class="absolute inset-0 bg-slate-900/60"></div>
-      <section id="enquiry-form" class="relative z-10 h-full w-full overflow-y-auto py-4 px-3 md:py-10 md:px-0">
-        <div class="max-w-3xl mx-auto bg-white rounded-xl shadow-2xl border border-slate-200 overflow-hidden">
-          <div class="sticky top-0 z-10 bg-slate-50 border-b border-slate-200 px-4 py-4 md:px-6 md:py-5">
-            <div class="flex items-start justify-between gap-4">
-              <div>
-                <h2 id="appointment-modal-title" class="text-2xl md:text-3xl font-bold text-blue-900" data-lang-en="Request an Appointment" data-lang-es="Solicitar una cita">Request an Appointment</h2>
-                <p class="text-base md:text-lg text-slate-800 mt-2" data-lang-en="Complete this short form and our front desk team will call you back within 1 business day." data-lang-es="Complete este formulario breve y nuestro equipo de recepción le llamará dentro de 1 día hábil.">Complete this short form and our front desk team will call you back within 1 business day.</p>
-              </div>
-              <button type="button" id="close-appointment-modal" class="px-4 py-2 rounded bg-white text-gray-800 border border-gray-300 font-semibold focus:outline-none focus:ring-2 focus:ring-blue-400" data-lang-en="Close" data-lang-es="Cerrar">Close</button>
-            </div>
-          </div>
-      <form id="patient-enquiry-form" class="p-5 md:p-8 space-y-6" novalidate>
-        <h3 class="text-xl font-semibold text-blue-700" data-lang-en="Contact details" data-lang-es="Datos de contacto">Contact details</h3>
-        <div class="grid gap-6 md:grid-cols-2">
-          <div>
-            <label for="first_name" class="block font-semibold mb-1" data-lang-en="First name" data-lang-es="Nombre">First name</label>
-            <input type="text" id="first_name" name="first_name" minlength="2" maxlength="50" required pattern="[A-Za-zÁÉÍÓÚÑÜáéíóúñü ]+" class="w-full min-h-12 px-3.5 py-2.5 border border-gray-300 rounded-md text-base sm:text-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="e.g. Ana" data-lang-en="e.g. Ana" data-lang-es="p.ej. Ana">
-            <span class="error-message text-red-600 text-sm mt-1 block" id="error-first_name"></span>
-          </div>
-          <div>
-            <label for="last_name" class="block font-semibold mb-1" data-lang-en="Last name" data-lang-es="Apellido">Last name</label>
-            <input type="text" id="last_name" name="last_name" minlength="2" maxlength="50" required pattern="[A-Za-zÁÉÍÓÚÑÜáéíóúñü ]+" class="w-full min-h-12 px-3.5 py-2.5 border border-gray-300 rounded-md text-base sm:text-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="e.g. García" data-lang-en="e.g. García" data-lang-es="p.ej. García">
-            <span class="error-message text-red-600 text-sm mt-1 block" id="error-last_name"></span>
-          </div>
-        </div>
-        <div class="grid gap-6 md:grid-cols-2">
-          <div>
-            <label for="date_of_birth" class="block font-semibold mb-1" data-lang-en="Date of birth" data-lang-es="Fecha de nacimiento">Date of birth</label>
-            <input type="date" id="date_of_birth" name="date_of_birth" required class="w-full min-h-12 px-3.5 py-2.5 border border-gray-300 rounded-md text-base sm:text-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-400">
-            <span class="error-message text-red-600 text-sm mt-1 block" id="error-date_of_birth"></span>
-          </div>
-          <div>
-            <label for="email" class="block font-semibold mb-1" data-lang-en="Email address" data-lang-es="Correo electrónico">Email address</label>
-            <input type="email" id="email" name="email" required class="w-full min-h-12 px-3.5 py-2.5 border border-gray-300 rounded-md text-base sm:text-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="e.g. ana@email.com" data-lang-en="e.g. ana@email.com" data-lang-es="p.ej. ana@email.com">
-            <span class="error-message text-red-600 text-sm mt-1 block" id="error-email"></span>
-          </div>
-        </div>
-        <h3 class="text-xl font-semibold text-blue-700" data-lang-en="Visit preferences" data-lang-es="Preferencias de visita">Visit preferences</h3>
-        <div class="grid gap-6 md:grid-cols-2">
-          <div>
-            <label for="phone" class="block font-semibold mb-1" data-lang-en="Phone number" data-lang-es="Teléfono">Phone number</label>
-            <input type="tel" id="phone" name="phone" required class="w-full min-h-12 px-3.5 py-2.5 border border-gray-300 rounded-md text-base sm:text-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="e.g. +1 305 555 0191" data-lang-en="e.g. +1 305 555 0191" data-lang-es="p.ej. +1 305 555 0191">
-            <span class="error-message text-red-600 text-sm mt-1 block" id="error-phone"></span>
-          </div>
-          <div>
-            <label for="preferred_language" class="block font-semibold mb-1" data-lang-en="Preferred language" data-lang-es="Idioma preferido">Preferred language</label>
-            <select id="preferred_language" name="preferred_language" required class="w-full min-h-12 px-3.5 py-2.5 border border-gray-300 rounded-md text-base sm:text-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-400">
-              <option value="" disabled selected data-lang-en="Select language" data-lang-es="Seleccione idioma">Select language</option>
-              <option value="English" data-lang-en="English" data-lang-es="Inglés">English</option>
-              <option value="Spanish" data-lang-en="Spanish" data-lang-es="Español">Spanish</option>
-            </select>
-            <span class="error-message text-red-600 text-sm mt-1 block" id="error-preferred_language"></span>
-          </div>
-        </div>
-        <div class="grid gap-6 md:grid-cols-2">
-          <div>
-            <label for="preferred_clinic" class="block font-semibold mb-1" data-lang-en="Preferred clinic" data-lang-es="Clínica preferida">Preferred clinic</label>
-            <select id="preferred_clinic" name="preferred_clinic" required class="w-full min-h-12 px-3.5 py-2.5 border border-gray-300 rounded-md text-base sm:text-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-400">
-              <option value="" disabled selected data-lang-en="Select clinic" data-lang-es="Seleccione clínica">Select clinic</option>
-              <option value="HealthCore Austin Central">HealthCore Austin Central</option>
-              <option value="HealthCore Austin North">HealthCore Austin North</option>
-              <option value="HealthCore San Antonio">HealthCore San Antonio</option>
-              <option value="HealthCore Miami">HealthCore Miami</option>
-              <option value="HealthCore Orlando">HealthCore Orlando</option>
-              <option value="HealthCore Atlanta">HealthCore Atlanta</option>
-            </select>
-            <span class="error-message text-red-600 text-sm mt-1 block" id="error-preferred_clinic"></span>
-          </div>
-          <div>
-            <label for="preferred_date" class="block font-semibold mb-1" data-lang-en="Preferred date" data-lang-es="Fecha preferida">Preferred date</label>
-            <input type="date" id="preferred_date" name="preferred_date" required class="w-full min-h-12 px-3.5 py-2.5 border border-gray-300 rounded-md text-base sm:text-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-400">
-            <span class="error-message text-red-600 text-sm mt-1 block" id="error-preferred_date"></span>
-          </div>
-        </div>
-        <div class="grid gap-6 md:grid-cols-2">
-          <div>
-            <label for="preferred_time" class="block font-semibold mb-1" data-lang-en="Preferred time of day" data-lang-es="Hora preferida del día">Preferred time of day</label>
-            <select id="preferred_time" name="preferred_time" required class="w-full min-h-12 px-3.5 py-2.5 border border-gray-300 rounded-md text-base sm:text-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-400">
-              <option value="" disabled selected data-lang-en="Select time" data-lang-es="Seleccione hora">Select time</option>
-              <option value="Morning" data-lang-en="Morning (7am–12pm)" data-lang-es="Mañana (7am–12pm)">Morning (7am–12pm)</option>
-              <option value="Afternoon" data-lang-en="Afternoon (12pm–5pm)" data-lang-es="Tarde (12pm–5pm)">Afternoon (12pm–5pm)</option>
-              <option value="Evening" data-lang-en="Evening (5pm–8pm)" data-lang-es="Noche (5pm–8pm)">Evening (5pm–8pm)</option>
-            </select>
-            <span class="error-message text-red-600 text-sm mt-1 block" id="error-preferred_time"></span>
-            <span class="text-amber-700 text-sm mt-1 block hidden" id="warning-evening-availability" data-lang-en="Evening appointments may be limited at this clinic. Our team will confirm the nearest available slot." data-lang-es="Las citas por la tarde pueden ser limitadas en esta clínica. Nuestro equipo confirmará el horario más cercano disponible.">Evening appointments may be limited at this clinic. Our team will confirm the nearest available slot.</span>
-          </div>
-          <div>
-            <label for="service_type" class="block font-semibold mb-1" data-lang-en="Service needed" data-lang-es="Servicio requerido">Service needed</label>
-            <select id="service_type" name="service_type" required class="w-full min-h-12 px-3.5 py-2.5 border border-gray-300 rounded-md text-base sm:text-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-400">
-              <option value="" disabled selected data-lang-en="Select service" data-lang-es="Seleccione servicio">Select service</option>
-              <option value="Primary Care" data-lang-en="Primary Care" data-lang-es="Atención primaria">Primary Care</option>
-              <option value="Chronic Disease Management" data-lang-en="Chronic Disease Management" data-lang-es="Manejo de enfermedades crónicas">Chronic Disease Management</option>
-              <option value="Specialist Consultation" data-lang-en="Specialist Consultation" data-lang-es="Consulta con especialista">Specialist Consultation</option>
-              <option value="Preventive Health" data-lang-en="Preventive Health" data-lang-es="Salud preventiva">Preventive Health</option>
-              <option value="Women's Health" data-lang-en="Women's Health" data-lang-es="Salud de la mujer">Women's Health</option>
-              <option value="Paediatric Care" data-lang-en="Paediatric Care" data-lang-es="Atención pediátrica">Paediatric Care</option>
-              <option value="Mental Health" data-lang-en="Mental Health" data-lang-es="Salud mental">Mental Health</option>
-            </select>
-            <span class="error-message text-red-600 text-sm mt-1 block" id="error-service_type"></span>
-          </div>
-        </div>
-        <div class="grid gap-6 md:grid-cols-2">
-          <fieldset>
-            <legend class="block font-semibold mb-1" data-lang-en="Is this your first visit to HealthCore?" data-lang-es="¿Es su primera visita a HealthCore?">Is this your first visit to HealthCore?</legend>
-            <div class="flex items-center space-x-6 mt-1">
-              <label class="inline-flex items-center">
-                <input type="radio" name="new_patient" value="Yes" required class="form-radio">
-                <span class="ml-2" data-lang-en="Yes" data-lang-es="Sí">Yes</span>
-              </label>
-              <label class="inline-flex items-center">
-                <input type="radio" name="new_patient" value="No" required class="form-radio">
-                <span class="ml-2" data-lang-en="No" data-lang-es="No">No</span>
-              </label>
-            </div>
-            <span class="error-message text-red-600 text-sm mt-1 block" id="error-new_patient"></span>
-          </fieldset>
-          <div id="patient-id-field" class="hidden">
-            <label for="patient_id" class="block font-semibold mb-1" data-lang-en="Patient ID (if returning)" data-lang-es="ID de paciente (si regresa)">Patient ID (if returning)</label>
-            <input type="text" id="patient_id" name="patient_id" pattern="HC-[A-Za-z0-9]{6}" class="w-full min-h-12 px-3.5 py-2.5 border border-gray-300 rounded-md text-base sm:text-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="e.g. HC-A3F291" data-lang-en="e.g. HC-A3F291" data-lang-es="p.ej. HC-A3F291">
-            <span class="error-message text-red-600 text-sm mt-1 block" id="error-patient_id"></span>
-          </div>
-        </div>
-        <h3 class="text-xl font-semibold text-blue-700" data-lang-en="Insurance and history" data-lang-es="Seguro e historial">Insurance and history</h3>
-        <div class="grid gap-6 md:grid-cols-2">
-          <fieldset>
-            <legend class="block font-semibold mb-1" data-lang-en="Do you have health insurance?" data-lang-es="¿Tiene seguro médico?">Do you have health insurance?</legend>
-            <div class="flex items-center space-x-6 mt-1">
-              <label class="inline-flex items-center">
-                <input type="radio" name="has_insurance" value="Yes" required class="form-radio">
-                <span class="ml-2" data-lang-en="Yes" data-lang-es="Sí">Yes</span>
-              </label>
-              <label class="inline-flex items-center">
-                <input type="radio" name="has_insurance" value="No" required class="form-radio">
-                <span class="ml-2" data-lang-en="No" data-lang-es="No">No</span>
-              </label>
-            </div>
-            <span class="error-message text-red-600 text-sm mt-1 block" id="error-has_insurance"></span>
-          </fieldset>
-          <div id="insurance-fields" class="hidden space-y-4">
-            <div>
-              <label for="insurance_provider" class="block font-semibold mb-1" data-lang-en="Insurance provider" data-lang-es="Proveedor de seguro">Insurance provider</label>
-              <input type="text" id="insurance_provider" name="insurance_provider" maxlength="100" class="w-full min-h-12 px-3.5 py-2.5 border border-gray-300 rounded-md text-base sm:text-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="e.g. BlueCross" data-lang-en="e.g. BlueCross" data-lang-es="p.ej. BlueCross">
-              <span class="error-message text-red-600 text-sm mt-1 block" id="error-insurance_provider"></span>
-            </div>
-            <div>
-              <label for="insurance_member_id" class="block font-semibold mb-1" data-lang-en="Member ID" data-lang-es="ID de miembro">Member ID</label>
-              <input type="text" id="insurance_member_id" name="insurance_member_id" minlength="6" maxlength="20" class="w-full min-h-12 px-3.5 py-2.5 border border-gray-300 rounded-md text-base sm:text-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-400" placeholder="e.g. 12345678" data-lang-en="e.g. 12345678" data-lang-es="p.ej. 12345678">
-              <span class="error-message text-red-600 text-sm mt-1 block" id="error-insurance_member_id"></span>
-            </div>
-          </div>
-        </div>
-        <h3 class="text-xl font-semibold text-blue-700" data-lang-en="Your health concern" data-lang-es="Su problema de salud">Your health concern</h3>
-        <div>
-          <label for="health_concern" class="block font-semibold mb-1" data-lang-en="Brief description of your health concern" data-lang-es="Breve descripción de su problema de salud">Brief description of your health concern</label>
-          <textarea id="health_concern" name="health_concern" rows="4" minlength="20" maxlength="500" required class="w-full min-h-12 px-3.5 py-2.5 border border-gray-300 rounded-md text-base sm:text-lg bg-white focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none" placeholder="e.g. I have had a persistent cough for 2 weeks..." data-lang-en="e.g. I have had a persistent cough for 2 weeks..." data-lang-es="p.ej. He tenido una tos persistente durante 2 semanas..."></textarea>
-          <div class="flex items-center justify-between mt-1">
-            <span class="error-message text-red-600 text-sm" id="error-health_concern"></span>
-            <span class="text-sm text-gray-500 ml-auto" id="health_concern_counter">0/500</span>
-          </div>
-        </div>
-        <div class="flex items-center mt-4">
-          <input type="checkbox" id="contact_consent" name="contact_consent" required class="form-checkbox mr-2">
-          <label for="contact_consent" class="text-gray-800" data-lang-en="I consent to HealthCore contacting me" data-lang-es="Consiento que HealthCore me contacte">I consent to HealthCore contacting me</label>
-        </div>
-        <span class="error-message text-red-600 text-sm block" id="error-contact_consent"></span>
-        <div class="mt-4 grid gap-3 sm:grid-cols-2">
-          <button type="reset" id="clear-enquiry-form" class="w-full bg-white text-blue-700 text-lg font-semibold py-3 rounded shadow border border-blue-300 hover:bg-blue-50 focus:outline-none focus:ring-2 focus:ring-blue-400 transition" data-lang-en="Clear form" data-lang-es="Limpiar formulario">Clear form</button>
-          <button type="submit" class="w-full bg-blue-700 text-white text-lg font-semibold py-3 rounded shadow hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-400 transition" data-lang-en="Submit enquiry" data-lang-es="Enviar consulta">Submit enquiry</button>
-        </div>
-        <div class="mt-6 p-4 bg-blue-50 border-l-4 border-blue-400 rounded">
-          <span class="block text-blue-900 text-sm" data-lang-en="Are you a healthcare provider or organisation looking to partner with HealthCore? Contact our operations team at " data-lang-es="¿Es usted un proveedor de atención médica u organización que desea asociarse con HealthCore? Contacte a nuestro equipo de operaciones en ">Are you a healthcare provider or organisation looking to partner with HealthCore? Contact our operations team at </span>
-          <a href="mailto:partnerships@healthcore.com" class="text-blue-700 underline text-xs align-middle">partnerships@healthcore.com</a>
-        </div>
-        <div id="form-success-message" class="hidden mt-8 p-6 bg-green-50 border-l-4 border-green-400 rounded text-green-900 text-lg"></div>
-      </form>
-        </div>
-      </section>
-    </div>
   </main>
 
   <aside class="fixed bottom-0 inset-x-0 md:hidden bg-blue-900 text-white border-t border-blue-700 z-40" aria-label="Quick help bar">
@@ -595,92 +414,9 @@
   <!-- Language toggle and accessibility JS will be implemented here -->
   <script id="lang-toggle-js"></script>
   <script>
-    // --- Language toggle logic ---
     const langButtons = document.querySelectorAll('[data-set-lang]');
     let currentLang = 'en';
 
-    // Error and success messages
-    const messages = {
-      en: {
-        first_name: "First name must contain only letters and be at least 2 characters",
-        last_name: "Last name must contain only letters and be at least 2 characters",
-        date_of_birth: "Enter a valid date of birth. Patient must be between 0 and 120 years old",
-        email: "Enter a valid email address (example: name@provider.com)",
-        phone: "Phone must include a country code (example: +1 305 555 0191)",
-        preferred_language: "Select your preferred language",
-        preferred_clinic: "Select the clinic you would like to visit",
-        preferred_date: "Select a date at least 1 business day from today and no more than 60 days ahead",
-        preferred_time: "Select your preferred time of day",
-        service_type: "Select the type of care you are looking for",
-        service_type_ped: "Paediatric Care is available for patients under 18. Please check the date of birth or select a different service.",
-        new_patient: "Please indicate whether this is your first visit to HealthCore",
-        has_insurance: "Please indicate whether you have health insurance",
-        insurance_provider: "Please enter your insurance provider name",
-        insurance_member_id: "Member ID must be between 6 and 20 alphanumeric characters",
-        health_concern: (n) => `Please describe your health concern in at least 20 characters (${n} characters remaining)`,
-        consent: "You must consent to being contacted before submitting this form",
-        success: `Thank you for reaching out to HealthCore.\nWe have received your enquiry. A member of our front desk team will contact you within 1 business day to confirm your appointment details and answer any questions.\nIf you need urgent assistance, please call your preferred clinic directly using the numbers listed on our website.\nWe look forward to caring for you.`
-      },
-      es: {
-        first_name: "El nombre debe contener solo letras y tener al menos 2 caracteres",
-        last_name: "El apellido debe contener solo letras y tener al menos 2 caracteres",
-        date_of_birth: "Ingrese una fecha de nacimiento válida. El paciente debe tener entre 0 y 120 años",
-        email: "Ingrese una dirección de correo electrónico válida (ejemplo: nombre@proveedor.com)",
-        phone: "El teléfono debe incluir el código de país (ejemplo: +1 305 555 0191)",
-        preferred_language: "Seleccione su idioma preferido",
-        preferred_clinic: "Seleccione la clínica que desea visitar",
-        preferred_date: "Seleccione una fecha al menos 1 día hábil desde hoy y no más de 60 días adelante",
-        preferred_time: "Seleccione su hora preferida del día",
-        service_type: "Seleccione el tipo de atención que busca",
-        service_type_ped: "La atención pediátrica está disponible para pacientes menores de 18 años. Verifique la fecha de nacimiento o seleccione otro servicio.",
-        new_patient: "Indique si es su primera visita a HealthCore",
-        has_insurance: "Indique si tiene seguro médico",
-        insurance_provider: "Ingrese el nombre de su proveedor de seguro",
-        insurance_member_id: "El ID de miembro debe tener entre 6 y 20 caracteres alfanuméricos",
-        health_concern: (n) => `Describa su problema de salud en al menos 20 caracteres (${n} caracteres restantes)` ,
-        consent: "Debe consentir ser contactado antes de enviar este formulario",
-        success: `Gracias por comunicarse con HealthCore.\nHemos recibido su consulta. Un miembro de nuestro equipo de recepción se comunicará con usted dentro de 1 día hábil para confirmar los detalles de su cita y responder cualquier pregunta.\nSi necesita asistencia urgente, llame directamente a su clínica preferida usando los números que figuran en nuestro sitio web.\nEsperamos poder atenderle.`
-      }
-    };
-
-    function setLang(lang) {
-      currentLang = lang;
-      langButtons.forEach(btn => {
-        const buttonLang = btn.getAttribute('data-set-lang');
-        const active = buttonLang === lang;
-        btn.setAttribute('aria-pressed', String(active));
-        btn.classList.toggle('text-blue-700', active);
-        btn.classList.toggle('bg-blue-50', active);
-        btn.classList.toggle('border-blue-700', active);
-        btn.classList.toggle('text-gray-700', !active);
-        btn.classList.toggle('bg-gray-50', !active);
-        btn.classList.toggle('border-gray-300', !active);
-      });
-      document.querySelectorAll('[data-lang-en]').forEach(el => {
-        el.textContent = lang === 'en' ? el.getAttribute('data-lang-en') : el.getAttribute('data-lang-es');
-      });
-      document.querySelectorAll('[placeholder][data-lang-en]').forEach(el => {
-        el.placeholder = lang === 'en' ? el.getAttribute('data-lang-en') : el.getAttribute('data-lang-es');
-      });
-      document.querySelectorAll('option[data-lang-en]').forEach(opt => {
-        opt.textContent = lang === 'en' ? opt.getAttribute('data-lang-en') : opt.getAttribute('data-lang-es');
-      });
-      // Update error messages if visible
-      updateAllErrors();
-      // Update success message if visible
-      const successDiv = document.getElementById('form-success-message');
-      if (!successDiv.classList.contains('hidden')) {
-        successDiv.textContent = messages[lang].success;
-      }
-      updateHeroTagline();
-      updateEveningAvailabilityWarning();
-    }
-
-    langButtons.forEach(btn => {
-      btn.addEventListener('click', () => setLang(btn.getAttribute('data-set-lang')));
-    });
-
-    // Rotating hero tagline
     const taglineEl = document.getElementById('hero-rotating-tagline');
     const taglines = {
       en: [
@@ -697,36 +433,43 @@
       ].filter(Boolean)
     };
     let taglineIdx = 0;
+
     function updateHeroTagline() {
       if (!taglineEl) return;
       const activeTaglines = taglines[currentLang] || taglines.en;
       taglineEl.textContent = activeTaglines[taglineIdx] || activeTaglines[0];
     }
+
+    function setLang(lang) {
+      currentLang = lang;
+      langButtons.forEach(btn => {
+        const active = btn.getAttribute('data-set-lang') === lang;
+        btn.setAttribute('aria-pressed', String(active));
+        btn.classList.toggle('text-blue-700', active);
+        btn.classList.toggle('bg-blue-50', active);
+        btn.classList.toggle('border-blue-700', active);
+        btn.classList.toggle('text-gray-700', !active);
+        btn.classList.toggle('bg-gray-50', !active);
+        btn.classList.toggle('border-gray-300', !active);
+      });
+
+      document.querySelectorAll('[data-lang-en]').forEach(el => {
+        el.textContent = lang === 'en' ? el.getAttribute('data-lang-en') : el.getAttribute('data-lang-es');
+      });
+
+      updateHeroTagline();
+    }
+
+    langButtons.forEach(btn => {
+      btn.addEventListener('click', () => setLang(btn.getAttribute('data-set-lang')));
+    });
+
     if (taglineEl) {
       setInterval(() => {
         const activeTaglines = taglines[currentLang] || taglines.en;
         taglineIdx = (taglineIdx + 1) % activeTaglines.length;
         updateHeroTagline();
       }, 2600);
-      updateHeroTagline();
-    }
-
-    // Navbar appointment button (desktop)
-    const navbarAppointmentBtn = document.getElementById('navbar-appointment-btn');
-    if (navbarAppointmentBtn) {
-      navbarAppointmentBtn.addEventListener('click', openAppointmentModal);
-    }
-    // Navbar appointment button (mobile)
-    const mobileNavbarAppointmentBtn = document.getElementById('mobile-navbar-appointment-btn');
-    if (mobileNavbarAppointmentBtn) {
-      mobileNavbarAppointmentBtn.addEventListener('click', () => {
-        openAppointmentModal();
-        // Also close mobile nav for better UX
-        const mobileNav = document.getElementById('mobile-nav');
-        const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
-        if (mobileNav) mobileNav.classList.add('hidden');
-        if (mobileMenuToggle) mobileMenuToggle.setAttribute('aria-expanded', 'false');
-      });
     }
 
     // Mobile menu interactions
@@ -754,399 +497,7 @@
       });
     }
 
-    // Appointment modal interactions
-    const appointmentModal = document.getElementById('appointment-modal');
-    const openAppointmentModalButton = document.getElementById('open-appointment-modal');
-    const closeAppointmentModalButton = document.getElementById('close-appointment-modal');
-    const appointmentModalBackdrop = document.getElementById('appointment-modal-backdrop');
-    const firstAppointmentField = document.getElementById('first_name');
-    const enquiryPanel = document.getElementById('enquiry-form');
-
-    function openAppointmentModal() {
-      if (!appointmentModal) return;
-      appointmentModal.classList.remove('hidden');
-      document.body.classList.add('overflow-hidden');
-      const quickHelpBar = document.querySelector('aside[aria-label="Quick help bar"]');
-      if (quickHelpBar) quickHelpBar.classList.add('hidden');
-      if (firstAppointmentField) firstAppointmentField.focus();
-    }
-
-    function closeAppointmentModal() {
-      if (!appointmentModal) return;
-      appointmentModal.classList.add('hidden');
-      document.body.classList.remove('overflow-hidden');
-      const quickHelpBar = document.querySelector('aside[aria-label="Quick help bar"]');
-      if (quickHelpBar) quickHelpBar.classList.remove('hidden');
-      if (openAppointmentModalButton) openAppointmentModalButton.focus();
-    }
-
-    if (openAppointmentModalButton) {
-      openAppointmentModalButton.addEventListener('click', openAppointmentModal);
-    }
-    if (closeAppointmentModalButton) {
-      closeAppointmentModalButton.addEventListener('click', closeAppointmentModal);
-    }
-    if (appointmentModalBackdrop) {
-      appointmentModalBackdrop.addEventListener('click', closeAppointmentModal);
-    }
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && appointmentModal && !appointmentModal.classList.contains('hidden')) {
-        closeAppointmentModal();
-      }
-    });
-
-    // Accessibility: focus management for skip link
-    const skipLink = document.querySelector('a[href="#main-content"]');
-    if (skipLink) {
-      skipLink.addEventListener('click', function(e) {
-        const main = document.getElementById('main-content');
-        if (main) main.focus();
-      });
-    }
-
-    // Conditional fields logic
-    const newPatientRadios = document.getElementsByName('new_patient');
-    const patientIdField = document.getElementById('patient-id-field');
-    newPatientRadios.forEach(radio => {
-      radio.addEventListener('change', () => {
-        if (radio.value === 'No' && radio.checked) {
-          patientIdField.classList.remove('hidden');
-        } else if (radio.value === 'Yes' && radio.checked) {
-          patientIdField.classList.add('hidden');
-        }
-      });
-    });
-
-    const insuranceRadios = document.getElementsByName('has_insurance');
-    const insuranceFields = document.getElementById('insurance-fields');
-    insuranceRadios.forEach(radio => {
-      radio.addEventListener('change', () => {
-        if (radio.value === 'Yes' && radio.checked) {
-          insuranceFields.classList.remove('hidden');
-        } else if (radio.value === 'No' && radio.checked) {
-          insuranceFields.classList.add('hidden');
-        }
-      });
-    });
-
-    // Live character counter for health concern
-    const healthConcern = document.getElementById('health_concern');
-    const healthConcernCounter = document.getElementById('health_concern_counter');
-    if (healthConcern && healthConcernCounter) {
-      healthConcern.addEventListener('input', () => {
-        const len = healthConcern.value.length;
-        healthConcernCounter.textContent = `${len}/500`;
-      });
-    }
-
-    // Evening availability warning logic
-    const eveningClinicClosingHour = {
-      'HealthCore Austin Central': 20,
-      'HealthCore Austin North': 19,
-      'HealthCore San Antonio': 18,
-      'HealthCore Miami': 20,
-      'HealthCore Orlando': 18,
-      'HealthCore Atlanta': 19
-    };
-    function updateEveningAvailabilityWarning() {
-      const warningEl = document.getElementById('warning-evening-availability');
-      const preferredTimeEl = document.getElementById('preferred_time');
-      const preferredClinicEl = document.getElementById('preferred_clinic');
-      if (!warningEl || !preferredTimeEl || !preferredClinicEl) return;
-      const isEvening = preferredTimeEl.value === 'Evening';
-      const clinic = preferredClinicEl.value;
-      const closesAt = eveningClinicClosingHour[clinic];
-      const showWarning = Boolean(isEvening && clinic && closesAt && closesAt < 20);
-      warningEl.classList.toggle('hidden', !showWarning);
-      warningEl.textContent = currentLang === 'es'
-        ? warningEl.getAttribute('data-lang-es')
-        : warningEl.getAttribute('data-lang-en');
-    }
-    const preferredTimeEl = document.getElementById('preferred_time');
-    const preferredClinicEl = document.getElementById('preferred_clinic');
-    if (preferredTimeEl) preferredTimeEl.addEventListener('change', updateEveningAvailabilityWarning);
-    if (preferredClinicEl) preferredClinicEl.addEventListener('change', updateEveningAvailabilityWarning);
-
-    // Initialize language state after hero/warning logic is ready
     setLang('en');
-
-    // --- Form validation logic ---
-    const form = document.getElementById('patient-enquiry-form');
-    const successDiv = document.getElementById('form-success-message');
-
-    function showError(field, msg) {
-      const err = document.getElementById('error-' + field);
-      if (err) {
-        err.textContent = msg;
-        err.setAttribute('aria-live', 'polite');
-      }
-    }
-    function clearError(field) {
-      const err = document.getElementById('error-' + field);
-      if (err) err.textContent = '';
-    }
-    function updateAllErrors() {
-      // Update all visible error messages to current language
-      [
-        'first_name','last_name','date_of_birth','email','phone','preferred_language','preferred_clinic','preferred_date','preferred_time','service_type','new_patient','has_insurance','insurance_provider','insurance_member_id','health_concern','contact_consent','patient_id'
-      ].forEach(field => {
-        const err = document.getElementById('error-' + field);
-        if (err && err.textContent) {
-          // Re-validate to get correct message
-          validateField(field);
-        }
-      });
-    }
-
-    function validateField(field) {
-      const f = form.elements[field];
-      const val = f ? f.value.trim() : '';
-      switch (field) {
-        case 'first_name':
-          if (!val.match(/^[A-Za-zÁÉÍÓÚÑÜáéíóúñü ]{2,50}$/)) {
-            showError(field, messages[currentLang].first_name);
-            return false;
-          }
-          break;
-        case 'last_name':
-          if (!val.match(/^[A-Za-zÁÉÍÓÚÑÜáéíóúñü ]{2,50}$/)) {
-            showError(field, messages[currentLang].last_name);
-            return false;
-          }
-          break;
-        case 'date_of_birth': {
-          if (!val) {
-            showError(field, messages[currentLang].date_of_birth);
-            return false;
-          }
-          const dob = new Date(val);
-          const today = new Date();
-          if (dob > today) {
-            showError(field, messages[currentLang].date_of_birth);
-            return false;
-          }
-          const age = today.getFullYear() - dob.getFullYear() - (today < new Date(today.getFullYear(), dob.getMonth(), dob.getDate()) ? 1 : 0);
-          if (age < 0 || age > 120) {
-            showError(field, messages[currentLang].date_of_birth);
-            return false;
-          }
-          break;
-        }
-        case 'email':
-          if (!val.match(/^\S+@\S+\.\S+$/)) {
-            showError(field, messages[currentLang].email);
-            return false;
-          }
-          break;
-        case 'phone':
-          if (!val.match(/^\+\d[\d\s\-()]{7,}$/)) {
-            showError(field, messages[currentLang].phone);
-            return false;
-          }
-          break;
-        case 'preferred_language':
-          if (!val) {
-            showError(field, messages[currentLang].preferred_language);
-            return false;
-          }
-          break;
-        case 'preferred_clinic':
-          if (!val) {
-            showError(field, messages[currentLang].preferred_clinic);
-            return false;
-          }
-          break;
-        case 'preferred_date': {
-          if (!val) {
-            showError(field, messages[currentLang].preferred_date);
-            return false;
-          }
-          const date = new Date(val);
-          date.setHours(0, 0, 0, 0);
-          const today = new Date();
-          today.setHours(0,0,0,0);
-          const minDate = new Date(today);
-          let businessDaysToAdd = 1;
-          while (businessDaysToAdd > 0) {
-            minDate.setDate(minDate.getDate() + 1);
-            const day = minDate.getDay();
-            if (day !== 0 && day !== 6) {
-              businessDaysToAdd -= 1;
-            }
-          }
-          const maxDate = new Date(today);
-          maxDate.setDate(today.getDate() + 60);
-          if (date < minDate || date > maxDate) {
-            showError(field, messages[currentLang].preferred_date);
-            return false;
-          }
-          break;
-        }
-        case 'preferred_time':
-          if (!val) {
-            showError(field, messages[currentLang].preferred_time);
-            return false;
-          }
-          updateEveningAvailabilityWarning();
-          break;
-        case 'service_type':
-          if (!val) {
-            showError(field, messages[currentLang].service_type);
-            return false;
-          }
-          // Paediatric Care: must be under 18
-          if (val === 'Paediatric Care') {
-            const dobVal = form.elements['date_of_birth'].value;
-            if (dobVal) {
-              const dob = new Date(dobVal);
-              const today = new Date();
-              let age = today.getFullYear() - dob.getFullYear();
-              if (today < new Date(today.getFullYear(), dob.getMonth(), dob.getDate())) age--;
-              if (age >= 18) {
-                showError(field, messages[currentLang].service_type_ped);
-                return false;
-              }
-            }
-          }
-          break;
-        case 'new_patient': {
-          const checked = Array.from(newPatientRadios).some(r => r.checked);
-          if (!checked) {
-            showError(field, messages[currentLang].new_patient);
-            return false;
-          }
-          break;
-        }
-        case 'has_insurance': {
-          const checked = Array.from(insuranceRadios).some(r => r.checked);
-          if (!checked) {
-            showError(field, messages[currentLang].has_insurance);
-            return false;
-          }
-          break;
-        }
-        case 'insurance_provider': {
-          const hasInsurance = Array.from(insuranceRadios).find(r => r.checked && r.value === 'Yes');
-          if (hasInsurance && !val) {
-            showError(field, messages[currentLang].insurance_provider);
-            return false;
-          }
-          break;
-        }
-        case 'insurance_member_id': {
-          const hasInsurance = Array.from(insuranceRadios).find(r => r.checked && r.value === 'Yes');
-          if (hasInsurance && (!val.match(/^[A-Za-z0-9]{6,20}$/))) {
-            showError(field, messages[currentLang].insurance_member_id);
-            return false;
-          }
-          break;
-        }
-        case 'patient_id': {
-          const returning = Array.from(newPatientRadios).find(r => r.checked && r.value === 'No');
-          if (returning && val && !val.match(/^HC\-[A-Za-z0-9]{6}$/)) {
-            showError(field, 'Format: HC- followed by 6 alphanumeric characters');
-            return false;
-          }
-          break;
-        }
-        case 'health_concern': {
-          if (val.length < 20) {
-            showError(field, messages[currentLang].health_concern(20 - val.length));
-            return false;
-          }
-          break;
-        }
-        case 'contact_consent': {
-          if (!form.elements['contact_consent'].checked) {
-            showError(field, messages[currentLang].consent);
-            return false;
-          }
-          break;
-        }
-      }
-      clearError(field);
-      return true;
-    }
-
-    function validateForm() {
-      let valid = true;
-      // Validate all fields
-      [
-        'first_name','last_name','date_of_birth','email','phone','preferred_language','preferred_clinic','preferred_date','preferred_time','service_type','new_patient','has_insurance','health_concern','contact_consent'
-      ].forEach(field => {
-        if (!validateField(field)) valid = false;
-      });
-      // Conditional fields
-      const hasInsurance = Array.from(insuranceRadios).find(r => r.checked && r.value === 'Yes');
-      if (hasInsurance) {
-        if (!validateField('insurance_provider')) valid = false;
-        if (!validateField('insurance_member_id')) valid = false;
-      }
-      const returning = Array.from(newPatientRadios).find(r => r.checked && r.value === 'No');
-      if (returning) {
-        if (!validateField('patient_id')) valid = false;
-      }
-      return valid;
-    }
-
-    if (form) {
-      form.addEventListener('reset', function() {
-        setTimeout(() => {
-          document.querySelectorAll('.error-message').forEach(el => { el.textContent = ''; });
-          successDiv.classList.add('hidden');
-          successDiv.textContent = '';
-          if (healthConcernCounter) healthConcernCounter.textContent = '0/500';
-          const warningEl = document.getElementById('warning-evening-availability');
-          if (warningEl) warningEl.classList.add('hidden');
-          document.getElementById('insurance-fields')?.classList.add('hidden');
-          document.getElementById('patient-id-field')?.classList.add('hidden');
-        }, 0);
-      });
-
-      form.addEventListener('submit', function(e) {
-        e.preventDefault();
-        // Hide previous success
-        successDiv.classList.add('hidden');
-        successDiv.textContent = '';
-        // Validate
-        if (validateForm()) {
-          // Hide form, show success
-          form.reset();
-          document.getElementById('insurance-fields').classList.add('hidden');
-          document.getElementById('patient-id-field').classList.add('hidden');
-          successDiv.textContent = messages[currentLang].success;
-          successDiv.classList.remove('hidden');
-          const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-          if (enquiryPanel) {
-            const successTop = successDiv.getBoundingClientRect().top - enquiryPanel.getBoundingClientRect().top;
-            enquiryPanel.scrollTo({top: Math.max(successTop - 24, 0), behavior: reduceMotion ? 'auto' : 'smooth'});
-          }
-        } else {
-          const firstError = document.querySelector('.error-message:not(:empty)');
-          if (firstError) {
-            const fieldId = firstError.id.replace('error-', '');
-            const targetById = document.getElementById(fieldId);
-            if (targetById) {
-              targetById.focus();
-            } else {
-              const targetByName = form.querySelector(`[name="${fieldId}"]`);
-              if (targetByName) targetByName.focus();
-            }
-          }
-        }
-      });
-      // Validate on blur
-      [
-        'first_name','last_name','date_of_birth','email','phone','preferred_language','preferred_clinic','preferred_date','preferred_time','service_type','health_concern','insurance_provider','insurance_member_id','patient_id'
-      ].forEach(field => {
-        const el = form.elements[field];
-        if (el) {
-          el.addEventListener('blur', () => validateField(field));
-        }
-      });
-      // Consent checkbox
-      form.elements['contact_consent'].addEventListener('change', () => validateField('contact_consent'));
-    }
   </script>
 </body>
 </html>
