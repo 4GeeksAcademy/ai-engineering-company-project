@@ -2,45 +2,39 @@
 
 ## Current state
 
-Course submission layout applied: Phase 1 under `scripts/` (`analyze.py`, `incidents-healthcore.csv`), Phase 2 API under `services/api/`, upload UI under `uis/web/`. Ready for PR with console + web screenshots.
+Supplier Directory (Milestone 09) implemented: TinyDB + Pydantic API under `services/api/`, UI under `uis/web/` at `/suppliers` (internal app formerly called backoffice; `uis/backoffice` is empty/unused).
 
 ## Completed
 
-- Milestone 1–4 prior deliverables (website, programming fundamentals, agent scaffolding)
-- Incident analyzer CLI + Phase 2 API/UI integration
-- Restructure to course paths: `scripts/` + `services/api/` + `uis/web/`
+- Milestone 1–4 prior deliverables; Incident analyzer CLI + Phase 2 API/UI
+- Supplier TinyDB models, seeder (`uv run seed`), endpoints POST/GET/PATCH
+- Backoffice supplier page: client-side filters, register form with 422 errors, inline rate + status updates, active vs suspended styling
 
 ## Validation results
 
-- CLI from `scripts/`: 100/94/6, avg 3.58; 17 unit tests OK
-- `services/api`: 7 API tests OK (fixture path `scripts/`)
-- `npm run typecheck` (website + web) OK
-- Layout: `scripts/analyze.py`, `services/api/`, `uis/web/` present; `incidents-analysis/` and `uis/backoffice/` removed
+- `uv run seed` → Seeded 15 suppliers into TinyDB
+- Smoke: GET/POST `/suppliers`, GET `/suppliers/{id}`, PATCH rate/status; invalid UK+USD → 422 Validation failed
+- `npm run typecheck -w uis/web` OK
 
 ## Blockers
 
-- None. PR screenshots are manual.
+- None for supplier directory MVP.
 
 ## Next steps
 
-1. Push branch and open PR; attach script console + web UI screenshots.
-2. When requested: expand toward `services/healthcore-api` modular monolith.
+1. Manual UI check at http://localhost:3001/suppliers with API on :8000
+2. Commit/PR when user requests
 
 ## Run commands (durable)
 
 ```bash
-npm install
-npm run dev:website      # :3000
-npm run dev:web          # :3001
-npm run typecheck
+cd services/api
+uv sync
+uv run seed
+uv run uvicorn app.main:app --reload --port 8000
 
-cd scripts
-python3 analyze.py incidents-healthcore.csv --no-export
-python3 -m unittest discover -s tests -v
-
-cd services/api && source .venv/bin/activate
-uvicorn app.main:app --reload --port 8000
-python -m unittest discover -s tests -v
+npm run dev:web          # :3001 → /suppliers
+npm run typecheck -w uis/web
 ```
 
-Last updated: 2026-08-06
+Last updated: 2026-08-10

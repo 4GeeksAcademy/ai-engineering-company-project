@@ -5,6 +5,7 @@ const nav = [
   { href: "/", label: "Welcome" },
   { href: "/operations", label: "Operations analytics" },
   { href: "/incidents", label: "Incident analysis" },
+  { href: "/suppliers", label: "Supplier directory" },
 ];
 
 export function BackofficeShell({ children }: { children: ReactNode }) {
