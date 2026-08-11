@@ -1,0 +1,2 @@
+# Stdlib-only project — no third-party packages required.
+# Python 3.10+ recommended.

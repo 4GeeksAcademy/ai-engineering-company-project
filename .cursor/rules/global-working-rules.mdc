@@ -1,0 +1,29 @@
+---
+description: Apply Global Working Rules — memory bank layout, skills, scoped changes, safety
+alwaysApply: true
+---
+
+# Global working rules
+
+This project uses a project-local memory bank and the Global Working Rules.
+
+## Memory bank
+
+Required active files under `memory-bank/`:
+
+- `context.md` — goal, scope, constraints, relevant files
+- `spec.md` — requirements, acceptance criteria, expected behavior
+- `progress.md` — completed work, current state, validation, blockers, next steps
+- `decisions.md` — material decisions, rationale, rejected alternatives
+- `archive/` — completed iterations only; do not read unless the user asks
+
+Read the four active files before substantial planning or implementation. Update them after material plans, decisions, milestones, validation, blockers, handoffs, or completion.
+
+## Operating norms
+
+- Check for applicable skills before non-trivial tasks; read full skill files only when relevant
+- Make the smallest change that satisfies the request
+- Do not commit, push, create branches, or open PRs unless the user asks
+- Never expose or commit secrets
+- Never claim validation passed unless it was run
+- Follow root `AGENTS.md` for HealthCore protected paths and delivery workflow

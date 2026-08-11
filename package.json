@@ -3,13 +3,13 @@
   "private": true,
   "workspaces": [
     "uis/website",
-    "uis/backoffice"
+    "uis/web"
   ],
   "scripts": {
     "dev:website": "npm run dev -w uis/website",
-    "dev:backoffice": "npm run dev -w uis/backoffice",
+    "dev:web": "npm run dev -w uis/web",
     "build:website": "npm run build -w uis/website",
-    "build:backoffice": "npm run build -w uis/backoffice",
-    "typecheck": "npm run typecheck -w uis/website && npm run typecheck -w uis/backoffice"
+    "build:web": "npm run build -w uis/web",
+    "typecheck": "npm run typecheck -w uis/website && npm run typecheck -w uis/web"
   }
 }

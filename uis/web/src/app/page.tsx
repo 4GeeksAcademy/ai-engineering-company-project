@@ -19,20 +19,35 @@ export default function WelcomePage() {
             <li>Review claim denial and no-show analytics</li>
             <li>Search sample claims and clinicians</li>
             <li>Run CME and validation checks</li>
+            <li>Analyze patient incident CSV exports</li>
+            <li>Manage the centralized supplier directory</li>
           </ul>
         </div>
         <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
           <h3 className="font-semibold text-slate-900">Get started</h3>
           <p className="mt-3 text-slate-600">
-            Open operations analytics to exercise the imported TypeScript utilities against sample
-            HealthCore data.
+            Open operations analytics, upload incident CSVs, or manage suppliers for Diane and Claire.
           </p>
-          <Link
-            href="/operations"
-            className="mt-4 inline-flex rounded-md bg-sky-700 px-4 py-2 text-sm font-semibold text-white hover:bg-sky-800"
-          >
-            Open operations analytics
-          </Link>
+          <div className="mt-4 flex flex-wrap gap-3">
+            <Link
+              href="/operations"
+              className="inline-flex rounded-md bg-sky-700 px-4 py-2 text-sm font-semibold text-white hover:bg-sky-800"
+            >
+              Open operations analytics
+            </Link>
+            <Link
+              href="/incidents"
+              className="inline-flex rounded-md border border-sky-700 px-4 py-2 text-sm font-semibold text-sky-800 hover:bg-sky-50"
+            >
+              Incident analysis
+            </Link>
+            <Link
+              href="/suppliers"
+              className="inline-flex rounded-md border border-sky-700 px-4 py-2 text-sm font-semibold text-sky-800 hover:bg-sky-50"
+            >
+              Supplier directory
+            </Link>
+          </div>
         </div>
       </div>
     </div>

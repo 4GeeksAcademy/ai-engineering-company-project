@@ -41,7 +41,8 @@ npx tsc --noEmit
 uis/programming-fundamentals/
 ├── index.html
 ├── main.ts
-└── main.js
+├── main.js
+└── programming-fundamentals-context.md
 
 src/
 ├── types/

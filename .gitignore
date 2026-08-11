@@ -23,3 +23,13 @@ yarn-error.log*
 # TypeScript
 *.tsbuildinfo
 next-env.d.ts
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Generated incident analysis exports (keep sample fixture)
+scripts/incident_metrics_export.csv

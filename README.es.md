@@ -1,9 +1,9 @@
-# Proyecto de Compañía - Ingeniería de IA — Plantilla para estudiantes
+# Proyecto de Compañía - Ingeniería de IA — HealthCore Digital
 
 [![4Geeks Academy](https://img.shields.io/badge/4Geeks-Academy-blue)](https://4geeksacademy.com)
 [![AI Engineering](https://img.shields.io/badge/track-AI%20Engineering-green)](https://4geeksacademy.com/es/programas-de-carrera/ingenieria-ia)
 
-_Plantilla base para proyectos transversales del Programa de Carrera en Ingeniería de IA — 4Geeks Academy._
+_Plantilla base para proyectos transversales del Programa de Carrera en Ingeniería de IA — 4Geeks Academy. Este fork está asignado a **HealthCore**._
 
 _Las instrucciones están [disponibles en inglés](./README.md)._
 
@@ -11,44 +11,63 @@ _Las instrucciones están [disponibles en inglés](./README.md)._
 
 ## Propósito
 
-Este repositorio es la **plantilla de inicio** para los proyectos transversales. Trabajarás con escenarios de empresas reales (Brasaland, TrackFlow, Nexova) construyendo entregables que se corresponden con los hitos del curso (Web, Programación, Backend, Telemetría, RAG, Agentes, Workflows, Tiempo real).
+Este repositorio es el proyecto de trabajo de la unidad HealthCore Digital. Los entregables se corresponden con los hitos del curso (Web, Programación, Backend, Telemetría, RAG, Agentes, Workflows, Tiempo real).
 
-- Crea una plantilla a partir de este repositorio.
-- Reemplaza el `CONTEXT.md` placeholder por el contexto de tu empresa asignada.
-- Usa `skills/` y los `README.md` por carpeta como guía de trabajo.
+- El contexto de la empresa está en [`CONTEXT.md`](./CONTEXT.md).
+- Usa `skills/`, `AGENTS.md`, `memory-bank/` y los `README.md` por carpeta como guía de trabajo.
 
 ---
 
-## Estado actual de la plantilla
+## Estado actual
 
-Actualmente el repositorio ofrece una **estructura base de carpetas y documentación**, pero todavía no incluye aplicaciones ejecutables ni scripts globales en la raíz.
+El andamiaje de HealthCore Digital está en su sitio para el contexto de agentes y las UIs Next.js.
 
-- `CONTEXT.md` es un placeholder y debe sustituirse por el contexto de la empresa asignada.
-- No existe todavía un `AGENTS.md` en la raíz.
-- Existe metadata del paquete compartido en `packages/shared/package.json` (`@repo/shared-types`), pero aún no hay runner de workspace en raíz.
+- Briefing de empresa: [`CONTEXT.md`](./CONTEXT.md)
+- Contexto de agentes: `memory-bank/`, `AGENTS.md` en la raíz, `.agents/rules/`, `skills/pre-delivery-verification/`
+- Workspaces npm: `uis/website` (puerto 3000) y `uis/web` (puerto 3001)
+- Plano del backend: [`docs/architecture_proposal.md`](./docs/architecture_proposal.md)
+- API Fase 2: [`services/api/`](./services/api/) (análisis/export de incidentes en el puerto 8000)
+- CLI Fase 1: [`scripts/analyze.py`](./scripts/analyze.py) + [`scripts/incidents-healthcore.csv`](./scripts/incidents-healthcore.csv)
+- Metadata del paquete compartido: `packages/shared/package.json` (`@repo/shared-types`)
+- Lógica de dominio Milestone 2: `src/types/`, `src/utils/` (importada por `uis/web`; futura propiedad de la API)
 
 ---
 
 ## Estructura del repositorio
 
 ```text
-ai-engineering-company-project-monorepo/
+ai-engineering-company-project/
 ├── README.md
 ├── README.es.md
-├── CONTEXT.md                # Placeholder a reemplazar con el contexto asignado
+├── CONTEXT.md                # Briefing de empresa asignada (HealthCore)
+├── AGENTS.md                 # Cómo deben operar los agentes de IA en este repo
+├── memory-bank/              # Memoria activa del agente (context, spec, progress, decisions)
+├── .agents/rules/            # Reglas de agentes por alcance
+├── .cursor/rules/            # Reglas Cursor always-apply del proyecto
 ├── agents/                   # Patrones/plantillas de agentes y documentación de tools
 ├── data/                     # raw, process, pipelines, eval
 ├── docs/                     # Documentación de proyecto y arquitectura
+│   ├── architecture_proposal.md
+│   ├── HealthCore-Landing-Page.md
+│   └── Healthcore-web-development-CONTEXT.md
 ├── infra/                    # Docker, Terraform, configuraciones de despliegue
 ├── internal/                 # CLIs, scripts de migración empaquetados, utilidades internas
 ├── mcps/                     # Servidores Model Context Protocol (MCP)
 ├── packages/
 │   └── shared/               # Paquete compartido (@repo/shared-types)
-├── scripts/                  # Convenciones/documentación de scripts
-├── services/                 # APIs y workers en segundo plano
+├── scripts/                  # Fase 1 analyze.py + incidents-healthcore.csv
+├── services/
+│   └── api/                  # FastAPI Fase 2 análisis/export de incidentes
 ├── shared/                   # Recursos/convenciones compartidas a nivel repo
 ├── skills/                   # Skills reutilizables para agentes
-├── uis/                      # Interfaces de usuario (React, Next.js, Streamlit, HTML)
+├── src/                      # Tipos y utils de dominio Milestone 2 (solo importar)
+├── uis/                      # Interfaces de usuario
+│   ├── website/              # Sitio público Next.js
+│   ├── web/                  # UI interna Next.js (carga + visualización)
+│   ├── programming-fundamentals/  # Demo Milestone 2 en navegador
+│   ├── index.html            # Archivo Milestone 1
+│   ├── application.html
+│   └── validation.js
 └── workflows/                # Documentación de automatizaciones/orquestación
 ```
 
@@ -56,11 +75,19 @@ ai-engineering-company-project-monorepo/
 
 ## Cómo empezar
 
-1. **Usa este repositorio como plantilla** y crea tu propio repo de proyecto.
-2. **Clona** tu repositorio (o ábrelo en Codespaces).
-3. **Reemplaza** `CONTEXT.md` con el contexto completo de tu empresa asignada.
-4. **Revisa** los `README.md` de cada carpeta raíz para entender responsabilidades (`uis/`, `services/`, `data/`, `skills/`, etc.).
-5. **Empieza a implementar** entregables por hito en `uis/` y `services/`, reutilizando `packages/shared/` y `data/` según corresponda.
+1. **Clona** este repositorio (o ábrelo en Codespaces).
+2. **Lee** [`CONTEXT.md`](./CONTEXT.md) y [`AGENTS.md`](./AGENTS.md).
+3. **Revisa** los `README.md` de cada carpeta raíz (`uis/`, `services/`, `docs/`, `skills/`, etc.).
+4. **Instala y ejecuta** las UIs desde la raíz del repo:
+
+```bash
+npm install
+npm run dev:website      # http://localhost:3000
+npm run dev:web          # http://localhost:3001
+npm run typecheck
+```
+
+5. **Continúa los hitos** en `uis/` y `services/`, reutilizando `packages/shared/` y `data/` según corresponda. El trabajo de backend debe seguir [`docs/architecture_proposal.md`](./docs/architecture_proposal.md).
 
 ---
 

@@ -1,26 +1,40 @@
-# Progress
+# Progress — Active iteration
 
-## Status legend
+## Current state
 
-- [x] Done
-- [~] In progress
-- [ ] Not started
+Supplier Directory (Milestone 09) implemented: TinyDB + Pydantic API under `services/api/`, UI under `uis/web/` at `/suppliers` (internal app formerly called backoffice; `uis/backoffice` is empty/unused).
 
-## Milestones
+## Completed
 
-- [x] Milestone 1 — Static corporate website (`uis/index.html`, enquiry form)
-- [x] Milestone 2 — Programming fundamentals (`src/`, `uis/programming-fundamentals`)
-- [x] Milestone 4 / Monorepo AI setup — memory bank, AGENTS.md, `.agents/`, skill, Next.js apps
-  - [x] `memory-bank/` created
-  - [x] `AGENTS.md`, `.agents/rules/`, `skills/pre-delivery-verification`
-  - [x] `uis/website` Next.js migration of Milestone 1
-  - [x] `uis/backoffice` welcome + import Milestone 2 into UI
-- [ ] Backend APIs under `services/`
-- [ ] Later milestones (telemetry, RAG, agents runtime, workflows, real-time)
+- Milestone 1–4 prior deliverables; Incident analyzer CLI + Phase 2 API/UI
+- Supplier TinyDB models, seeder (`uv run seed`), endpoints POST/GET/PATCH
+- Backoffice supplier page: client-side filters, register form with 422 errors, inline rate + status updates, active vs suspended styling
 
-## Notes
+## Validation results
 
-- Branch for this work: `milestone-4`.
-- Company context source: `CONTEXT-healthcore.md` (do not edit without instruction).
-- Run: `npm run dev:website` (3000), `npm run dev:backoffice` (3001), `npm run typecheck`.
-- Last updated: 2026-07-29
+- `uv run seed` → Seeded 15 suppliers into TinyDB
+- Smoke: GET/POST `/suppliers`, GET `/suppliers/{id}`, PATCH rate/status; invalid UK+USD → 422 Validation failed
+- `npm run typecheck -w uis/web` OK
+
+## Blockers
+
+- None for supplier directory MVP.
+
+## Next steps
+
+1. Manual UI check at http://localhost:3001/suppliers with API on :8000
+2. Commit/PR when user requests
+
+## Run commands (durable)
+
+```bash
+cd services/api
+uv sync
+uv run seed
+uv run uvicorn app.main:app --reload --port 8000
+
+npm run dev:web          # :3001 → /suppliers
+npm run typecheck -w uis/web
+```
+
+Last updated: 2026-08-10

@@ -2,7 +2,7 @@
 
 ## Milestone 1: Your Company's Public Website
 
-_Estas instrucciones están [disponibles en español](./CONTEXT-healthcore.es.md)._
+_Spanish translation is not in this repository; company briefing: [`CONTEXT.md`](../CONTEXT.md)._
 
 > This document describes your company and the specific situation you're building this milestone for. Read it completely before writing any code. Everything you build must reflect this context.
 

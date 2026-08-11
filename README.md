@@ -1,9 +1,9 @@
-# AI Engineering Company Project — Student Template
+# AI Engineering Company Project — HealthCore Digital
 
 [![4Geeks Academy](https://img.shields.io/badge/4Geeks-Academy-blue)](https://4geeksacademy.com)
 [![AI Engineering](https://img.shields.io/badge/track-AI%20Engineering-green)](https://4geeksacademy.com/es/programas-de-carrera/ingenieria-ia)
 
-_Base template for transversal projects in the AI Engineering Career Program — 4Geeks Academy._
+_Base template for transversal projects in the AI Engineering Career Program — 4Geeks Academy. This fork is assigned to **HealthCore**._
 
 > _Instrucciones disponibles en español en [README.es.md](./README.es.md)._
 
@@ -11,32 +11,39 @@ _Base template for transversal projects in the AI Engineering Career Program —
 
 ## Purpose
 
-This repository is the **starter template** for transversal projects. You will work on real company scenarios (Brasaland, TrackFlow, Nexova), building deliverables that map to course milestones (Web, Programming, Backend, Telemetry, RAG, Agents, Workflows, Real-time).
+This repository is the working project for the HealthCore Digital unit. Deliverables map to course milestones (Web, Programming, Backend, Telemetry, RAG, Agents, Workflows, Real-time).
 
-- Create a template from this repository.
-- Replace the placeholder `CONTEXT.md` with your assigned company context.
-- Use `skills/` and the directory-level `README.md` files as working guidance.
+- Company context lives in [`CONTEXT.md`](./CONTEXT.md).
+- Use `skills/`, `AGENTS.md`, `memory-bank/`, and directory-level `README.md` files as working guidance.
 
 ---
 
-## Current status of the template
+## Current status
 
 HealthCore Digital scaffolding is in place for agent context and Next.js UIs.
 
-- Company briefing: `CONTEXT-healthcore.md` (keep `CONTEXT.md` as programme placeholder).
-- Agent context: `memory-bank/`, root `AGENTS.md`, `.agents/rules/`, `skills/pre-delivery-verification/`.
-- npm workspaces: `uis/website` (public site, port 3000) and `uis/backoffice` (internal, port 3001).
-- Shared package metadata still exists in `packages/shared/package.json` (`@repo/shared-types`).
+- Company briefing: [`CONTEXT.md`](./CONTEXT.md)
+- Agent context: `memory-bank/`, root `AGENTS.md`, `.agents/rules/`, `skills/pre-delivery-verification/`
+- npm workspaces: `uis/website` (port 3000) and `uis/web` (port 3001)
+- Backend blueprint: [`docs/architecture_proposal.md`](./docs/architecture_proposal.md)
+- Phase 2 API: [`services/api/`](./services/api/) (incident analyze/export on port 8000)
+- Phase 1 incident CLI: [`scripts/analyze.py`](./scripts/analyze.py) + [`scripts/incidents-healthcore.csv`](./scripts/incidents-healthcore.csv)
+- Shared package metadata: `packages/shared/package.json` (`@repo/shared-types`)
+- Milestone 2 domain logic: `src/types/`, `src/utils/` (imported by `uis/web`; future API ownership)
 
 ---
 
 ## Repository structure
 
 ```text
-ai-engineering-company-project-monorepo/
+ai-engineering-company-project/
 ├── README.md
 ├── README.es.md
-├── CONTEXT.md                # Placeholder to be replaced with assigned context
+├── CONTEXT.md                # Assigned company briefing (HealthCore)
+├── AGENTS.md                 # How AI agents must operate in this repo
+├── memory-bank/              # Active agent memory (context, spec, progress, decisions)
+├── .agents/rules/            # Scoped agent rules
+├── .cursor/rules/            # Cursor always-apply project rules
 ├── agents/                   # Agent patterns/templates and tools docs
 ├── data/                     # raw, process, pipelines, eval
 ├── docs/                     # Project and architecture documentation
@@ -45,23 +52,71 @@ ai-engineering-company-project-monorepo/
 ├── mcps/                     # Model Context Protocol (MCP) Servers
 ├── packages/
 │   └── shared/               # Shared package (@repo/shared-types)
-├── scripts/                  # Script conventions/documentation
-├── services/                 # APIs and background workers
+├── scripts/                  # Phase 1 analyze.py + incidents-healthcore.csv (+ helpers)
+├── services/
+│   └── api/                  # FastAPI Phase 2 incident analyze/export
 ├── shared/                   # Shared assets/conventions at repo level
 ├── skills/                   # Reusable agent skills
-├── uis/                      # User interfaces (React, Next.js, Streamlit, HTML)
+├── src/                      # Milestone 2 domain types + utils (import only)
+├── uis/                      # User interfaces
+│   ├── website/              # Public Next.js site
+│   ├── web/                  # Internal Next.js UI (upload + visualisation)
+│   ├── programming-fundamentals/  # Milestone 2 browser demo
+│   ├── index.html            # Milestone 1 archive
+│   ├── application.html
+│   └── validation.js
 └── workflows/                # Automation/orchestration documentation
 ```
+
+Course submission layout (incident analyzer):
+
+```text
+scripts/
+├── analyze.py
+└── incidents-healthcore.csv
+services/
+└── api/
+uis/
+└── web/
+```
+
+PR should include screenshots of (1) script console output on the 100-row CSV and (2) the web UI with analysis loaded.
 
 ---
 
 ## How to start
 
-1. **Use this repository as a template** and create your own project repo.
-2. **Clone** your repository (or open it in Codespaces).
-3. **Replace** `CONTEXT.md` with the full context for your assigned company.
-4. **Review** each top-level folder `README.md` to understand intended responsibilities (`uis/`, `services/`, `data/`, `skills/`, etc.).
-5. **Start implementing** milestone deliverables in `uis/` and `services/`, reusing `packages/shared/` and `data/` as needed.
+1. **Clone** this repository (or open it in Codespaces).
+2. **Read** [`CONTEXT.md`](./CONTEXT.md) and [`AGENTS.md`](./AGENTS.md).
+3. **Review** each top-level folder `README.md` (`uis/`, `services/`, `docs/`, `skills/`, etc.).
+4. **Install and run** UIs from the repo root:
+
+```bash
+npm install
+npm run dev:website      # http://localhost:3000
+npm run dev:web          # http://localhost:3001
+npm run typecheck
+```
+
+5. **Phase 1 CLI:**
+
+```bash
+cd scripts
+python3 analyze.py incidents-healthcore.csv --no-export
+```
+
+6. **Phase 2 API** (for `uis/web` `/incidents`):
+
+```bash
+cd services/api
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+uvicorn app.main:app --reload --port 8000
+```
+
+Optional: copy [`uis/web/.env.example`](./uis/web/.env.example) to `.env.local` if you need a non-default API URL.
+
+7. **Continue milestones** in `uis/` and `services/`, reusing `packages/shared/` and `data/` as needed. Broader backend work should follow [`docs/architecture_proposal.md`](./docs/architecture_proposal.md).
 
 ---
 
