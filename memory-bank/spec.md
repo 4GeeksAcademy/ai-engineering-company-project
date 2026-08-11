@@ -13,14 +13,16 @@
 - [x] Required memory-bank files exist at repo root of `memory-bank/`.
 - [x] Prior milestone-4 memory archived under `archive/2026-07-29-monorepo-ai-frontend/`.
 - [x] Project `AGENTS.md` points at the global memory-bank file names and embeds global working-rule expectations.
-- [ ] Backend API scaffolding not started until user requests implementation.
+- [x] Backend Phase 2 `services/api` shipped; full `healthcore-api` still pending user request.
 
 ## Interfaces / expected behavior
 
 | Surface | Expected behavior |
 |---------|-------------------|
 | `uis/website` | Public corporate site; EN/ES; enquiry form; brand blues |
-| `uis/backoffice` | Welcome + `/operations` analytics from imported `src/` utils rendered in UI |
+| `uis/web` | Welcome + `/operations` analytics + `/incidents` upload UI |
+| `scripts/` | Phase 1 `analyze.py` + `incidents-healthcore.csv` |
+| `services/api` | Phase 2 FastAPI analyze/export |
 | Future `services/healthcore-api` | FastAPI `/api/v1` domains; OpenAPI contract for frontends |
 | Agents | Skill discovery before non-trivial work; smallest change that satisfies the ask; no secrets; no git publish unless asked |
 

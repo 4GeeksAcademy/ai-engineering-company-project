@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import csv
+import io
 from pathlib import Path
 
 from .constants import (
@@ -96,9 +97,15 @@ def metric_rows(summary: AnalysisSummary) -> list[dict[str, str]]:
 
 def export_metrics_csv(summary: AnalysisSummary, path: str | Path) -> Path:
     out = Path(path)
-    rows = metric_rows(summary)
     with out.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=["metric", "value", "percentage"])
-        writer.writeheader()
-        writer.writerows(rows)
+        handle.write(metrics_csv_text(summary))
     return out
+
+
+def metrics_csv_text(summary: AnalysisSummary) -> str:
+    """Return metrics CSV as a string (for HTTP download responses)."""
+    buffer = io.StringIO(newline="")
+    writer = csv.DictWriter(buffer, fieldnames=["metric", "value", "percentage"])
+    writer.writeheader()
+    writer.writerows(metric_rows(summary))
+    return buffer.getvalue()

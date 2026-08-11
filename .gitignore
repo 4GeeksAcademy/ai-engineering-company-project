@@ -30,3 +30,6 @@ __pycache__/
 *.egg-info/
 .venv/
 venv/
+
+# Generated incident analysis exports (keep sample fixture)
+scripts/incident_metrics_export.csv

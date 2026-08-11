@@ -2,13 +2,25 @@
 
 This folder contains **all the backend services** (APIs and background workers) related to the company for the cross-functional AI Engineering project.
 
-Each subfolder inside `services/` must correspond to **one specific service** (for example: `admin-api`, `data-processor-worker`) and include its own technical and functional documentation.
-
-- **Main purpose**: to centralize all the backend logic, APIs, and queue consumers that support the company's use cases.
-- **Recommendation**: document in this file (or in sub-READMEs) the services you add, their objective, the technology used, and how to run them.
+Each subfolder inside `services/` must correspond to **one specific service** and include its own technical and functional documentation.
 
 > _Spanish version: [README.es.md](./README.es.md)._
 
-## Related (not a service)
+## Active services
 
-The patient incident CSV analyzer is a **local Python CLI** under [`incidents-analysis/`](../incidents-analysis/). It is not an HTTP API and must not be placed here. Future dashboard integration may call similar rules from a `services/` module later.
+| Service | Path | Purpose |
+|---------|------|---------|
+| HealthCore API (Phase 2) | [`api/`](api/) | FastAPI incident analyze + export endpoints; reuses [`scripts/`](../scripts/) |
+
+```bash
+cd services/api
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+uvicorn app.main:app --reload --port 8000
+```
+
+The full modular monolith described in [`docs/architecture_proposal.md`](../docs/architecture_proposal.md) (`healthcore-api`) is still future work; `api/` is the first HTTP surface.
+
+## Related CLI (not a service)
+
+Phase 1 analyzer CLI: [`scripts/analyze.py`](../scripts/analyze.py). The API imports `scripts/src/` rather than copying rules.

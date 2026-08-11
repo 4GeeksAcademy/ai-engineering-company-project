@@ -32,7 +32,7 @@ Follow these steps **in order**. Do not skip.
 
 1. **Confirm context** — Active memory-bank files above were read this session; apply matching `.agents/rules/` for edited paths.
 2. **Implement in allowed paths only** — Leave protected paths untouched unless the user gave explicit instruction to change them.
-3. **Verify** — Run [`skills/pre-delivery-verification`](skills/pre-delivery-verification/SKILL.md) when UI, agent scaffolding, or delivery-status docs change. Acceptance criteria must pass (typecheck for UI work; Milestone 2 output visible in the DOM for backoffice analytics).
+3. **Verify** — Run [`skills/pre-delivery-verification`](skills/pre-delivery-verification/SKILL.md) when UI, agent scaffolding, or delivery-status docs change. Acceptance criteria must pass (typecheck for UI work; Milestone 2 output visible in the DOM for web analytics).
 4. **Update progress** — Update [`memory-bank/progress.md`](memory-bank/progress.md); update [`memory-bank/decisions.md`](memory-bank/decisions.md) if a material decision changed.
 5. **Commit** — Only after verification passes **and** the user requested a commit; use a clear message focused on why.
 
@@ -55,7 +55,8 @@ Follow these steps **in order**. Do not skip.
 | Kind of work | Location |
 |--------------|----------|
 | Public website | `uis/website/` |
-| Internal app | `uis/backoffice/` |
+| Internal web UI | `uis/web/` |
+| Incident CLI / CSV analysis | `scripts/` |
 | HTTP APIs | `services/` only |
 | Agent rules | `.agents/rules/` |
 | Agent skills | `skills/<skill-name>/` |

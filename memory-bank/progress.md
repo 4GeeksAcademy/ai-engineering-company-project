@@ -2,46 +2,45 @@
 
 ## Current state
 
-Incident File Analyzer CLI is implemented under `incidents-analysis/` (stdlib Python). Graded fixture aggregates match CONTEXT expectations (100 / 94 / 6). Active iteration also remains backend-ready for `services/healthcore-api` when requested.
+Course submission layout applied: Phase 1 under `scripts/` (`analyze.py`, `incidents-healthcore.csv`), Phase 2 API under `services/api/`, upload UI under `uis/web/`. Ready for PR with console + web screenshots.
 
 ## Completed
 
-- Milestone 1 static site (archived HTML under `uis/`)
-- Milestone 2 programming fundamentals (`src/`, demo under `uis/programming-fundamentals/`)
-- Milestone 4 agent scaffolding + Next.js website/backoffice
-- Backend architecture proposal (`docs/architecture_proposal.md`), including scale/evolution section
-- Merged milestone branches into `main` on `Janet-Currie-ai-engineering-company-project`
-- Memory bank realigned to global layout; prior files archived under `archive/2026-07-29-monorepo-ai-frontend/`
-- Root docs reorganized to match README structure (`CONTEXT.md`, `docs/*`, PF context co-located)
-- Incident CSV analyzer (`incidents-analysis/`): validate → summarize → console report + optional metrics export; PHI never printed
+- Milestone 1–4 prior deliverables (website, programming fundamentals, agent scaffolding)
+- Incident analyzer CLI + Phase 2 API/UI integration
+- Restructure to course paths: `scripts/` + `services/api/` + `uis/web/`
 
 ## Validation results
 
-- Website/backoffice previously typechecked and built successfully (2026-07-29).
-- Incident analyzer: `python3 -m unittest discover -s tests -v` (17 tests OK); `python3 analyze.py incidents-healthcore.csv --no-export` matches graded totals; export/report grepped for no `PAT-` values.
+- CLI from `scripts/`: 100/94/6, avg 3.58; 17 unit tests OK
+- `services/api`: 7 API tests OK (fixture path `scripts/`)
+- `npm run typecheck` (website + web) OK
+- Layout: `scripts/analyze.py`, `services/api/`, `uis/web/` present; `incidents-analysis/` and `uis/backoffice/` removed
 
 ## Blockers
 
-- None. Backend implementation waiting on explicit user go-ahead.
+- None. PR screenshots are manual.
 
 ## Next steps
 
-1. When requested: scaffold `services/healthcore-api` per architecture proposal (health/ready, locations, then analytics parity).
-2. Optionally integrate incident metrics into the patient experience dashboard / API later.
-3. Amend `.agents/rules/src-import-only.md` when API owns analytics (as noted in architecture proposal).
-4. Keep updating this file after any material work.
+1. Push branch and open PR; attach script console + web UI screenshots.
+2. When requested: expand toward `services/healthcore-api` modular monolith.
 
 ## Run commands (durable)
 
 ```bash
 npm install
 npm run dev:website      # :3000
-npm run dev:backoffice   # :3001
+npm run dev:web          # :3001
 npm run typecheck
 
-cd incidents-analysis
+cd scripts
 python3 analyze.py incidents-healthcore.csv --no-export
 python3 -m unittest discover -s tests -v
+
+cd services/api && source .venv/bin/activate
+uvicorn app.main:app --reload --port 8000
+python -m unittest discover -s tests -v
 ```
 
 Last updated: 2026-08-06

@@ -211,6 +211,8 @@ Export results to CSV? [y / n]:
 incidents-analysis/CONTEXT-healthcore.md
 ```
 
+(Course submission path: `scripts/CONTEXT-healthcore.md`.)
+
 ---
 
 _Internal document — 4Geeks Academy · AI Engineering Track_

@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 const nav = [
   { href: "/", label: "Welcome" },
   { href: "/operations", label: "Operations analytics" },
+  { href: "/incidents", label: "Incident analysis" },
 ];
 
 export function BackofficeShell({ children }: { children: ReactNode }) {

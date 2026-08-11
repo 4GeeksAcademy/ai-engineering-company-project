@@ -1,11 +1,8 @@
 # `uis` folder
 
-This folder contains **all the user interfaces** related to the company for the cross-functional AI Engineering project (for example: web applications, internal dashboards, customer portals, Streamlit/Gradio apps, etc.).
+This folder contains **all the user interfaces** related to the company for the cross-functional AI Engineering project.
 
-Each subfolder inside `uis/` must correspond to **one specific user interface** (for example: `website`, `backoffice`) and include its own technical and functional documentation.
-
-- **Main purpose**: to centralize in a single place all the frontend applications that support the company's use cases.
-- **Recommendation**: document in this file (or in sub-READMEs) the applications you add, their objective, the technology used, and how to run them.
+Each subfolder inside `uis/` must correspond to **one specific user interface** and include its own technical and functional documentation.
 
 > _Spanish version: [README.es.md](./README.es.md)._
 
@@ -16,16 +13,16 @@ From the **repository root** (npm workspaces):
 ```bash
 npm install
 npm run dev:website      # http://localhost:3000 — public HealthCore site
-npm run dev:backoffice   # http://localhost:3001 — HealthCore Digital backoffice
+npm run dev:web          # http://localhost:3001 — internal HealthCore Digital web UI
 npm run typecheck
 ```
 
 | App | Path | Purpose |
 |-----|------|---------|
-| Public website | [`website/`](website/) | Milestone 1 corporate site migrated to Next.js + reusable React components |
-| Backoffice | [`backoffice/`](backoffice/) | Internal layout, welcome screen, operations analytics importing Milestone 2 from `src/` |
+| Public website | [`website/`](website/) | Milestone 1 corporate site migrated to Next.js |
+| Internal web | [`web/`](web/) | Operations analytics + Phase 2 incident upload/visualisation |
 
-Backoffice imports domain logic via `@healthcore/*` → repo `src/` (import, do not copy).
+`uis/web` imports Milestone 2 domain logic via `@healthcore/*` → repo `src/` (import, do not copy). Incident analysis UI: `/incidents`.
 
 ## Milestone 1 archive (static)
 
@@ -43,4 +40,4 @@ Then open `http://localhost:5500`.
 
 ## Programming fundamentals demo
 
-[`programming-fundamentals/`](programming-fundamentals/) — Milestone 2 browser demo (console/panel demo). Prefer the backoffice operations view for the Next.js integration of the same `src/` modules.
+[`programming-fundamentals/`](programming-fundamentals/) — Milestone 2 browser demo. Prefer `uis/web` `/operations` for the Next.js integration of the same `src/` modules.
