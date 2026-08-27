@@ -20,13 +20,13 @@ export default function WelcomePage() {
             <li>Search sample claims and clinicians</li>
             <li>Run CME and validation checks</li>
             <li>Analyze patient incident CSV exports</li>
+            <li>Manage the centralized supplier directory</li>
           </ul>
         </div>
         <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
           <h3 className="font-semibold text-slate-900">Get started</h3>
           <p className="mt-3 text-slate-600">
-            Open operations analytics to exercise the imported TypeScript utilities against sample
-            HealthCore data, or upload an incident CSV for Patient Experience summaries.
+            Open operations analytics, upload incident CSVs, or manage suppliers for Diane and Claire.
           </p>
           <div className="mt-4 flex flex-wrap gap-3">
             <Link
@@ -40,6 +40,12 @@ export default function WelcomePage() {
               className="inline-flex rounded-md border border-sky-700 px-4 py-2 text-sm font-semibold text-sky-800 hover:bg-sky-50"
             >
               Incident analysis
+            </Link>
+            <Link
+              href="/suppliers"
+              className="inline-flex rounded-md border border-sky-700 px-4 py-2 text-sm font-semibold text-sky-800 hover:bg-sky-50"
+            >
+              Supplier directory
             </Link>
           </div>
         </div>

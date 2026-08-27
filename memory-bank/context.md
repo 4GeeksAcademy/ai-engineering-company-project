@@ -9,7 +9,8 @@ Operate HealthCore Digital’s monorepo so agents and engineers can safely exten
 - Maintain agent memory bank per global working rules (`context`, `spec`, `progress`, `decisions`, `archive/`).
 - Keep shipped UIs runnable: `uis/website`, `uis/web`.
 - Phase 1 incident CLI: [`scripts/`](../scripts/).
-- Phase 2 API: [`services/api/`](../services/api/).
+- Phase 2 API: [`services/api/`](../services/api/) (incidents + supplier directory TinyDB).
+- Supplier Directory source of truth: [`Supplier-Directory_Context.md`](../Supplier-Directory_Context.md).
 - Treat [`docs/architecture_proposal.md`](../docs/architecture_proposal.md) as the blueprint before expanding beyond Phase 2.
 - Do **not** invent production PHI flows or EHR integrations without explicit instruction.
 
@@ -35,9 +36,10 @@ HealthCore: 12 outpatient clinics (US + UK), ~200 staff, ~$28M revenue. Pain poi
 | `memory-bank/*` | Active iteration memory |
 | `docs/architecture_proposal.md` | Backend architecture decisions |
 | `uis/website/` | Public Next.js site |
-| `uis/web/` | Internal Next.js UI (ops + incidents) |
+| `uis/web/` | Internal Next.js UI (ops + incidents + suppliers) |
 | `scripts/` | Phase 1 analyze.py + CSV + shared validation |
-| `services/api/` | Phase 2 FastAPI incident analyze/export |
+| `services/api/` | FastAPI: incidents + suppliers (TinyDB) |
+| `Supplier-Directory_Context.md` | Milestone 09 supplier requirements + seed data |
 | `src/types/`, `src/utils/` | Milestone 2 domain logic (legacy-to-API path) |
 | `.agents/rules/` | Scoped path rules |
 | `skills/pre-delivery-verification/` | Pre-commit verification skill |

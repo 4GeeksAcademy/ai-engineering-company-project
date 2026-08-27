@@ -20,9 +20,9 @@
 | Surface | Expected behavior |
 |---------|-------------------|
 | `uis/website` | Public corporate site; EN/ES; enquiry form; brand blues |
-| `uis/web` | Welcome + `/operations` analytics + `/incidents` upload UI |
+| `uis/web` | Welcome + `/operations` + `/incidents` + `/suppliers` directory |
 | `scripts/` | Phase 1 `analyze.py` + `incidents-healthcore.csv` |
-| `services/api` | Phase 2 FastAPI analyze/export |
+| `services/api` | Incidents analyze/export + suppliers TinyDB CRUD (`POST/GET /suppliers`, rate/status PATCH) |
 | Future `services/healthcore-api` | FastAPI `/api/v1` domains; OpenAPI contract for frontends |
 | Agents | Skill discovery before non-trivial work; smallest change that satisfies the ask; no secrets; no git publish unless asked |
 

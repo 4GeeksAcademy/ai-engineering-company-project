@@ -16,6 +16,8 @@ Material decisions and rejected alternatives. Full backend rationale: [`docs/arc
 | Company briefing lives at root `CONTEXT.md`; Milestone docs under `docs/`; PF context under `uis/programming-fundamentals/` | Matches programme README structure; keeps `src/` in place for `@healthcore/*` imports |
 | Incident analyzer CLI lives under `scripts/` (`analyze.py`, `incidents-healthcore.csv`, `src/`) | Matches course submission monorepo layout |
 | Phase 2 HTTP surface is `services/api` with UI in `uis/web` | Matches course paths (`/services/api`, `/uis/web`) |
+| Supplier directory uses TinyDB at `services/api/data/suppliers.json` + Pydantic v2 | Matches Milestone 09 lightweight storage; seed via `uv run seed` |
+| Supplier UI lives in `uis/web` (not empty `uis/backoffice`) | `uis/backoffice` removed/empty after course restructure; internal app is `uis/web` |
 
 ## Rejected (for now)
 
