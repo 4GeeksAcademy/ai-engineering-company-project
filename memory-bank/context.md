@@ -10,7 +10,7 @@ Operate HealthCore Digital’s monorepo so agents and engineers can safely exten
 - Keep shipped UIs runnable: `uis/website`, `uis/web`.
 - Phase 1 incident CLI: [`scripts/`](../scripts/).
 - Phase 2 API: [`services/api/`](../services/api/) (incidents + shipped supplier directory TinyDB).
-- Auth API iteration: briefing pending (root `authentication_context.md` when provided).
+- Auth API iteration source of truth: [`authentication_context.md`](../authentication_context.md).
 - Treat [`docs/architecture_proposal.md`](../docs/architecture_proposal.md) as the blueprint before expanding beyond Phase 2.
 - Do **not** invent production PHI flows or EHR integrations without explicit instruction.
 
@@ -38,7 +38,8 @@ HealthCore: 12 outpatient clinics (US + UK), ~200 staff, ~$28M revenue. Pain poi
 | `uis/website/` | Public Next.js site |
 | `uis/web/` | Internal Next.js UI (ops + incidents + suppliers) |
 | `scripts/` | Phase 1 analyze.py + CSV + shared validation |
-| `services/api/` | FastAPI: incidents + suppliers (TinyDB) |
+| `services/api/` | FastAPI: incidents + suppliers (TinyDB); auth to be added here |
+| `authentication_context.md` | Staff auth phase requirements + seed users |
 | `src/types/`, `src/utils/` | Milestone 2 domain logic (legacy-to-API path) |
 | `.agents/rules/` | Scoped path rules |
 | `skills/pre-delivery-verification/` | Pre-commit verification skill |

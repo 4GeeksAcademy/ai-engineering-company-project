@@ -7,6 +7,7 @@
 3. Agents update `progress.md` (and `decisions.md` when material) after milestones, scope changes, validation, blockers, or handoffs.
 4. Existing HealthCore delivery gates remain: scoped `.agents/rules/`, `skills/pre-delivery-verification` before UI/agent-doc commits, protected paths untouched without instruction.
 5. Backend work, when started, must follow [`docs/architecture_proposal.md`](../docs/architecture_proposal.md) (modular monolith under `services/healthcore-api`, region-split residency, API owns analytics).
+6. Auth phase must follow [`authentication_context.md`](../authentication_context.md) (OAuth2 bearer JWT, role scopes in the API, existing `services/api`).
 
 ## Acceptance criteria
 
@@ -15,15 +16,16 @@
 - [x] Supplier Directory (Milestone 09) archived under `archive/2026-08-28-supplier-directory/`.
 - [x] Project `AGENTS.md` points at the global memory-bank file names and embeds global working-rule expectations.
 - [x] Backend Phase 2 `services/api` shipped; full `healthcore-api` still pending user request.
+- [x] Auth phase source of truth exists at root `authentication_context.md`.
 
 ## Interfaces / expected behavior
 
 | Surface | Expected behavior |
 |---------|-------------------|
 | `uis/website` | Public corporate site; EN/ES; enquiry form; brand blues |
-| `uis/web` | Welcome + `/operations` + `/incidents` + `/suppliers` directory |
+| `uis/web` | Login + Welcome + `/operations` + `/incidents` + `/suppliers` (Bearer to API) |
 | `scripts/` | Phase 1 `analyze.py` + `incidents-healthcore.csv` |
-| `services/api` | Incidents analyze/export + suppliers TinyDB CRUD (`POST/GET /suppliers`, rate/status PATCH) |
+| `services/api` | Incidents + suppliers (TinyDB) + staff auth (`POST /auth/token`, `GET /auth/me`; bearer on internal routes) |
 | Future `services/healthcore-api` | FastAPI `/api/v1` domains; OpenAPI contract for frontends |
 | Agents | Skill discovery before non-trivial work; smallest change that satisfies the ask; no secrets; no git publish unless asked |
 

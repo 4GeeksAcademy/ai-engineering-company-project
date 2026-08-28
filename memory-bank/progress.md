@@ -2,27 +2,27 @@
 
 ## Current state
 
-On branch `auth_api`. Supplier Directory (Milestone 09) is complete and merged to `main` (PR #2). Course briefing archived under `memory-bank/archive/2026-08-28-supplier-directory/`.
-
-Auth API iteration has not started: root briefing `authentication_context.md` is not present yet.
+On branch `auth_api`. Supplier Directory (Milestone 09) is complete and archived. Auth phase source of truth is [`authentication_context.md`](../authentication_context.md). Implementation has not started.
 
 ## Completed
 
 - Milestone 1–4 prior deliverables; Incident analyzer CLI + Phase 2 API/UI
 - Supplier directory TinyDB API + `uis/web` `/suppliers` UI (archived 2026-08-28)
+- Auth phase briefing written at repo root (architecture-derived; no course file was supplied)
 
 ## Validation results
 
 - Supplier directory: seed, smoke endpoints, and `npm run typecheck -w uis/web` passed before merge (see archive).
+- Auth briefing present; endpoints not yet implemented.
 
 ## Blockers
 
-- Auth briefing not yet provided.
+- None for starting auth implementation.
 
 ## Next steps
 
-1. Add [`authentication_context.md`](../authentication_context.md) (course briefing or architecture-derived auth requirements).
-2. Implement auth API under `services/` per that briefing and `docs/architecture_proposal.md`.
+1. Implement auth under `services/api` per [`authentication_context.md`](../authentication_context.md): seed users, `POST /auth/token`, `GET /auth/me`, protect suppliers + incidents.
+2. Add `uis/web` login, Bearer on API calls, sign-out.
 
 ## Run commands (durable)
 

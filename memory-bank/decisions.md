@@ -19,6 +19,8 @@ Material decisions and rejected alternatives. Full backend rationale: [`docs/arc
 | Phase 2 HTTP surface is `services/api` with UI in `uis/web` | Matches course paths (`/services/api`, `/uis/web`) |
 | Supplier directory uses TinyDB at `services/api/data/suppliers.json` + Pydantic v2 | Matches Milestone 09 lightweight storage; seed via `uv run seed` |
 | Supplier UI lives in `uis/web` (not empty `uis/backoffice`) | `uis/backoffice` removed/empty after course restructure; internal app is `uis/web` |
+| Auth phase uses FastAPI OAuth2 password + JWT in existing `services/api` | Live API already serves incidents/suppliers; `healthcore-api` remains the long-term modular monolith |
+| Staff tokens are OAuth2 bearer (not Next.js shared cookies) | Matches architecture proposal; works for non-browser clients later |
 
 ## Rejected (for now)
 
