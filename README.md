@@ -26,7 +26,7 @@ HealthCore Digital scaffolding is in place for agent context and Next.js UIs.
 - Agent context: `memory-bank/`, root `AGENTS.md`, `.agents/rules/`, `skills/pre-delivery-verification/`
 - npm workspaces: `uis/website` (port 3000) and `uis/web` (port 3001)
 - Backend blueprint: [`docs/architecture_proposal.md`](./docs/architecture_proposal.md)
-- Phase 2 API: [`services/api/`](./services/api/) (incident analyze/export on port 8000)
+- Phase 2 API: [`services/api/`](./services/api/) (incidents, suppliers, staff JWT auth on port 8000)
 - Phase 1 incident CLI: [`scripts/analyze.py`](./scripts/analyze.py) + [`scripts/incidents-healthcore.csv`](./scripts/incidents-healthcore.csv)
 - Shared package metadata: `packages/shared/package.json` (`@repo/shared-types`)
 - Milestone 2 domain logic: `src/types/`, `src/utils/` (imported by `uis/web`; future API ownership)
@@ -54,7 +54,7 @@ ai-engineering-company-project/
 │   └── shared/               # Shared package (@repo/shared-types)
 ├── scripts/                  # Phase 1 analyze.py + incidents-healthcore.csv (+ helpers)
 ├── services/
-│   └── api/                  # FastAPI Phase 2 incident analyze/export
+│   └── api/                  # FastAPI incidents, suppliers, staff JWT auth
 ├── shared/                   # Shared assets/conventions at repo level
 ├── skills/                   # Reusable agent skills
 ├── src/                      # Milestone 2 domain types + utils (import only)
@@ -105,16 +105,18 @@ cd scripts
 python3 analyze.py incidents-healthcore.csv --no-export
 ```
 
-6. **Phase 2 API** (for `uis/web` `/incidents`):
+6. **Phase 2 API** (required for `uis/web`; sign in at http://localhost:3001/login):
 
 ```bash
 cd services/api
+cp .env.example .env    # then set SECRET_KEY; add RESEND_API_KEY for real reset email
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
+python3 -m app.auth.seed
 uvicorn app.main:app --reload --port 8000
 ```
 
-Optional: copy [`uis/web/.env.example`](./uis/web/.env.example) to `.env.local` if you need a non-default API URL.
+Optional: copy [`uis/web/.env.example`](./uis/web/.env.example) to `.env.local` if you need a non-default API URL. See [`services/api/README.md`](./services/api/README.md) for auth routes and env vars.
 
 7. **Continue milestones** in `uis/` and `services/`, reusing `packages/shared/` and `data/` as needed. Broader backend work should follow [`docs/architecture_proposal.md`](./docs/architecture_proposal.md).
 

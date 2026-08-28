@@ -1,4 +1,4 @@
-"""Exact supplier seed data from Supplier-Directory_Context.md."""
+"""Exact supplier seed data from the Milestone 09 briefing (archived)."""
 
 from __future__ import annotations
 

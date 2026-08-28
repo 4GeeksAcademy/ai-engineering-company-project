@@ -1,10 +1,8 @@
 "use client";
 
 import { useCallback, useRef, useState, type DragEvent } from "react";
-import {
-  apiBaseUrl,
-  type IncidentAnalysisResult,
-} from "@/lib/incidentsApi";
+import { apiFetch } from "@/lib/apiClient";
+import { type IncidentAnalysisResult } from "@/lib/incidentsApi";
 
 const SATISFACTION_LABELS: Record<string, string> = {
   "1": "Very dissatisfied",
@@ -59,7 +57,7 @@ export function IncidentAnalyzer() {
     try {
       const body = new FormData();
       body.append("file", file);
-      const response = await fetch(`${apiBaseUrl()}/api/incidents/analyze`, {
+      const response = await apiFetch("/api/incidents/analyze", {
         method: "POST",
         body,
       });
@@ -84,7 +82,7 @@ export function IncidentAnalyzer() {
     setExporting(true);
     setError(null);
     try {
-      const response = await fetch(`${apiBaseUrl()}/api/incidents/results/export`);
+      const response = await apiFetch("/api/incidents/results/export");
       if (response.status === 404) {
         throw new Error("No analysis results available. Upload a CSV first.");
       }

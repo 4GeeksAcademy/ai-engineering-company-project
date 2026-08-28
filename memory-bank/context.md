@@ -9,8 +9,8 @@ Operate HealthCore Digital’s monorepo so agents and engineers can safely exten
 - Maintain agent memory bank per global working rules (`context`, `spec`, `progress`, `decisions`, `archive/`).
 - Keep shipped UIs runnable: `uis/website`, `uis/web`.
 - Phase 1 incident CLI: [`scripts/`](../scripts/).
-- Phase 2 API: [`services/api/`](../services/api/) (incidents + supplier directory TinyDB).
-- Supplier Directory source of truth: [`Supplier-Directory_Context.md`](../Supplier-Directory_Context.md).
+- Phase 2 API: [`services/api/`](../services/api/) — incidents, supplier directory (TinyDB), staff JWT auth.
+- Auth phase source of truth: [`authentication_context.md`](../authentication_context.md) (AUTH-01/02/03 implemented in this iteration).
 - Treat [`docs/architecture_proposal.md`](../docs/architecture_proposal.md) as the blueprint before expanding beyond Phase 2.
 - Do **not** invent production PHI flows or EHR integrations without explicit instruction.
 
@@ -22,6 +22,7 @@ Operate HealthCore Digital’s monorepo so agents and engineers can safely exten
 - APIs live only under `services/`.
 - HIPAA (US) / UK GDPR apply to any patient-adjacent data handling.
 - No commit/push/PR unless the user requests it.
+- User/Profile stay in TinyDB only (`services/api/data/auth.json`). Do not add User/Profile tables in Postgres/Supabase.
 
 ## Essential background
 
@@ -35,11 +36,11 @@ HealthCore: 12 outpatient clinics (US + UK), ~200 staff, ~$28M revenue. Pain poi
 | `AGENTS.md` | Project agent operating rules |
 | `memory-bank/*` | Active iteration memory |
 | `docs/architecture_proposal.md` | Backend architecture decisions |
-| `uis/website/` | Public Next.js site |
-| `uis/web/` | Internal Next.js UI (ops + incidents + suppliers) |
+| `uis/website/` | Public Next.js site (no auth) |
+| `uis/web/` | Internal Next.js UI (login + ops + incidents + suppliers) |
 | `scripts/` | Phase 1 analyze.py + CSV + shared validation |
-| `services/api/` | FastAPI: incidents + suppliers (TinyDB) |
-| `Supplier-Directory_Context.md` | Milestone 09 supplier requirements + seed data |
+| `services/api/` | FastAPI: incidents + suppliers + TinyDB users/profiles + JWT |
+| `authentication_context.md` | AUTH-01/02/03 course contract |
 | `src/types/`, `src/utils/` | Milestone 2 domain logic (legacy-to-API path) |
 | `.agents/rules/` | Scoped path rules |
 | `skills/pre-delivery-verification/` | Pre-commit verification skill |

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from fastapi import APIRouter, File, HTTPException, UploadFile
+from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
 from fastapi.responses import Response
 
 from app import store
@@ -12,7 +12,13 @@ from src.load import LoadError, load_incidents_from_bytes
 from src.summarize import AnalysisSummary, summarize
 from src.validate import validate_records
 
-router = APIRouter(prefix="/api/incidents", tags=["incidents"])
+from app.auth.security import get_current_user
+
+router = APIRouter(
+    prefix="/api/incidents",
+    tags=["incidents"],
+    dependencies=[Depends(get_current_user)],
+)
 
 
 def summary_to_json(summary: AnalysisSummary) -> dict:
