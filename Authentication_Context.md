@@ -34,7 +34,11 @@ The requirements below are derived from these public READMEs. If a future versio
 - Password-reset email delivery must use Resend or SendGrid.
 - Secrets, signing keys, email API keys, and environment-specific values must never be hardcoded or committed.
 
+
+
 ## Section 1 — AUTH-01: Authentication API and Route Protection
+
+
 
 ### Objective
 
@@ -44,16 +48,15 @@ Secure the existing company API so routes that expose or modify sensitive data r
 
 - Use `uv`, not `pip install` or Pipenv.
 - Required packages:
-
   ```bash
   uv add "python-jose[cryptography]" "libpass[bcrypt]"
   ```
-
 - Although the package is the maintained `libpass` fork, its compatible import is:
-
   ```python
   from passlib.hash import bcrypt
   ```
+
+
 
 ### TinyDB `User` model
 
@@ -73,6 +76,8 @@ Rules:
 - `role` accepts only `admin`, `manager`, or `user`; enforce this with an enum or validator.
 - New registrations through `POST /users` default to the `user` role.
 - Never expose `hashed_password` in API responses.
+
+
 
 ### TinyDB `Profile` model
 
@@ -113,6 +118,8 @@ Authorization must distinguish identity from permission. Missing or invalid auth
 - `GET /profiles/me`: protected; return the authenticated user's linked profile.
 - `PUT /profiles/me`: protected; allow the profile owner to update `name`, `phone`, and `address`.
 
+
+
 ### Required `/auth` routes
 
 - `POST /auth/login`: accept `email` and `password`, verify the password hash, and return a signed JWT access token.
@@ -136,6 +143,8 @@ Additional requirements:
 - The JWT must expire after a configurable interval.
 - Read token expiry from an environment variable such as `ACCESS_TOKEN_EXPIRE_MINUTES`.
 - Read the signing secret from `.env`; never hardcode it.
+
+
 
 ### Existing routes that must be protected
 
@@ -167,7 +176,11 @@ Fine-grained permission enforcement for every role on every route is not require
 - Protected existing routes work normally with a valid token.
 - Manually verify in `/docs`: register, login, authorize with the token, call protected routes, and test missing, malformed, and expired tokens.
 
+
+
 ## Section 2 — AUTH-02: Frontend Authentication Flows
+
+
 
 ### Objective
 
@@ -177,6 +190,8 @@ Do not build a separate authentication app.
 
 ### Required authentication views
 
+
+
 #### `/login`
 
 - Display an email and password form.
@@ -184,6 +199,8 @@ Do not build a separate authentication app.
 - On success, store the access token in `localStorage` and redirect to the main authenticated view.
 - On failure, show a clear error message.
 - This page must later include the AUTH-03 “Forgot your password?” link to `/forgot-password`.
+
+
 
 #### `/register`
 
@@ -195,7 +212,11 @@ Do not build a separate authentication app.
   3. Store the returned token in `localStorage`.
   4. Redirect to the main authenticated view.
 
+
+
 ### Required account view
+
+
 
 #### `/account/profile`
 
@@ -204,6 +225,8 @@ Do not build a separate authentication app.
 - Display `name`, `phone`, and `address` from the linked `Profile`.
 - Allow editing profile/contact fields through `PUT /profiles/me` with the bearer token.
 - Do not attempt to update profile/contact data through a user credential endpoint.
+
+
 
 ### Route protection
 
@@ -225,6 +248,8 @@ Because the assignment requires invalid-token handling, the implementation plan 
 - When any protected API request returns `401`, remove the token and redirect to `/login`.
 - Do not treat a `403` ownership/permission response as though the token were necessarily invalid.
 
+
+
 ### AUTH-02 validation and evaluation checklist
 
 - Login works end to end and stores the token.
@@ -238,7 +263,11 @@ Because the assignment requires invalid-token handling, the implementation plan 
 - Logout removes the token and redirects.
 - Any protected API `401` clears the session and redirects.
 
+
+
 ## Section 3 — AUTH-03: Password Recovery and Change
+
+
 
 ### Objective
 
@@ -260,6 +289,8 @@ The planning agent should select the provider deliberately, document the require
 
 ### Required backend routes
 
+
+
 #### `POST /auth/forgot-password`
 
 Request:
@@ -276,6 +307,8 @@ Behavior:
 - Send a readable, mobile-friendly email containing the reset link through Resend or SendGrid.
 - Always return `200`, including for unknown email addresses.
 - Always present the same generic outcome to prevent account enumeration.
+
+
 
 #### `POST /auth/reset-password`
 
@@ -316,12 +349,16 @@ The implementation plan should decide whether a successful authenticated passwor
 
 ### Required frontend views
 
+
+
 #### `/forgot-password`
 
 - Display an email input.
 - Call `POST /auth/forgot-password`.
 - After submission, always show a generic confirmation such as: “If that address is registered, you'll receive a link shortly.”
 - Disable the form after submission to prevent duplicate requests.
+
+
 
 #### `/reset-password`
 
@@ -332,6 +369,8 @@ The implementation plan should decide whether a successful authenticated passwor
 - On success, redirect to `/login` with a success message.
 - On an invalid or expired token, show a clear error and a link to `/forgot-password`.
 
+
+
 #### `/account/change-password`
 
 - This is an authenticated account view.
@@ -340,9 +379,13 @@ The implementation plan should decide whether a successful authenticated passwor
 - Call `POST /auth/change-password` with the bearer token.
 - Display clear success and error feedback.
 
+
+
 #### Login-page integration
 
 - Add a visible “Forgot your password?” link on `/login` pointing to `/forgot-password`.
+
+
 
 ### AUTH-03 security and evaluation checklist
 
@@ -360,6 +403,8 @@ The implementation plan should decide whether a successful authenticated passwor
 - Wrong current passwords return `400`.
 - No email provider key or other secret appears in the codebase.
 
+
+
 ### Optional, non-evaluated extensions
 
 Do not include these in the required scope unless the user approves them:
@@ -367,6 +412,8 @@ Do not include these in the required scope unless the user approves them:
 - Styled HTML email template beyond the required readable email.
 - Rate limiting reset requests per email address.
 - Password-reset audit logs with timestamp and IP address.
+
+
 
 ## Integrated end-to-end sequence
 
@@ -381,6 +428,8 @@ The completed phase should support these journeys:
 5. API returns a signed, expiring JWT carrying the TinyDB user ID.
 6. Frontend stores the token in `localStorage` and enters the authenticated application.
 
+
+
 ### Authenticated usage
 
 1. The protected Next.js application validates that a usable token exists.
@@ -389,11 +438,15 @@ The completed phase should support these journeys:
 4. Ownership checks compare the current user ID with the applicable `user_id`/`user_uuid`.
 5. `401` clears the frontend token and redirects to login; `403` preserves the session and reports insufficient permission.
 
+
+
 ### Profile management
 
 1. `/account/profile` loads `GET /auth/me`.
 2. Email and role come from `User`; name and contact data come from `Profile`.
 3. Profile edits go to `PUT /profiles/me`.
+
+
 
 ### Forgotten password
 
@@ -404,12 +457,16 @@ The completed phase should support these journeys:
 5. The API validates signature, expiry, and unused state, changes the hash, and invalidates the token.
 6. The frontend returns the user to `/login`.
 
+
+
 ### Authenticated password change
 
 1. User visits protected `/account/change-password`.
 2. Frontend validates password confirmation and submits current/new passwords with the access token.
 3. API verifies the current password and stores the new hash.
 4. UI displays success or the appropriate error.
+
+
 
 ## Combined definition of done
 
@@ -430,6 +487,8 @@ The authentication phase is complete only when:
 - Secrets are environment-based and documented with non-secret placeholders.
 - Automated tests and manual FastAPI/browser checks cover success, failure, expiry, reuse, ownership, redirect, and regression paths.
 
+
+
 ## Instructions for the planning and implementation agent
 
 1. Read `AGENTS.md` and the active `memory-bank/` files.
@@ -441,3 +500,4 @@ The authentication phase is complete only when:
 7. Preserve existing user changes and avoid unrelated refactors.
 8. Do not implement optional extensions without approval.
 9. Validate each delivery end to end and record decisions/results in the project memory bank.
+
