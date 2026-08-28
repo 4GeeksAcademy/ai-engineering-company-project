@@ -24,7 +24,7 @@ uv sync
 uv run seed
 ```
 
-This loads the exact 15 suppliers from `Supplier-Directory_Context.md`.
+This loads the exact 15 suppliers from `app/suppliers/seed_data.py`.
 
 ## Incident endpoints
 

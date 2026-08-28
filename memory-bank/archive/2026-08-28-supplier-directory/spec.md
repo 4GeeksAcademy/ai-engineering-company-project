@@ -12,7 +12,6 @@
 
 - [x] Required memory-bank files exist at repo root of `memory-bank/`.
 - [x] Prior milestone-4 memory archived under `archive/2026-07-29-monorepo-ai-frontend/`.
-- [x] Supplier Directory (Milestone 09) archived under `archive/2026-08-28-supplier-directory/`.
 - [x] Project `AGENTS.md` points at the global memory-bank file names and embeds global working-rule expectations.
 - [x] Backend Phase 2 `services/api` shipped; full `healthcore-api` still pending user request.
 

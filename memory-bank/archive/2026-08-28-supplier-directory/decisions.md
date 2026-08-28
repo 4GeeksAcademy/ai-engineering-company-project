@@ -8,7 +8,6 @@ Material decisions and rejected alternatives. Full backend rationale: [`docs/arc
 |----------|-----------|
 | Project memory bank uses global layout (`context`, `spec`, `progress`, `decisions`, `archive/`) | Aligns with global working rules in `~/.codex/AGENTS.md`; keeps active iteration concise |
 | Prior monorepo-frontend memory archived dated `2026-07-29-monorepo-ai-frontend` | Iteration complete; durable facts retained in active files |
-| Supplier Directory briefing archived dated `2026-08-28-supplier-directory` | Milestone 09 complete (PR #2); seed data lives in `services/api/app/suppliers/seed_data.py` |
 | Domain-driven **modular monolith** on **FastAPI** under `services/healthcore-api` | Fits six-person tech team; domain folders match org; extraction seams later |
 | Backend becomes owner of Milestone 2 analytics (port to Python; TS `src/` legacy after parity) | PHI-adjacent ops analytics; non-TS consumers coming; avoid dual formulas |
 | Data residency by **separate US/UK deployments + DBs**, shared codebase | HIPAA / UK GDPR; reject single-DB + region column |
