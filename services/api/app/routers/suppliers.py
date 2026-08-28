@@ -5,8 +5,10 @@ from __future__ import annotations
 from datetime import datetime, timezone
 from typing import Optional
 
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import ValidationError
+
+from app.auth.security import get_current_user
 
 from app.suppliers.db import suppliers_table
 from app.suppliers.models import (
@@ -17,7 +19,7 @@ from app.suppliers.models import (
     SupplierUpdate,
 )
 
-router = APIRouter(tags=["suppliers"])
+router = APIRouter(tags=["suppliers"], dependencies=[Depends(get_current_user)])
 
 
 def _doc_to_supplier(doc_id: int, doc: dict) -> Supplier:

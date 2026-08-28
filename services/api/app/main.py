@@ -16,12 +16,12 @@ _SCRIPTS = _REPO_ROOT / "scripts"
 if str(_SCRIPTS) not in sys.path:
     sys.path.insert(0, str(_SCRIPTS))
 
-from app.routers import incidents, suppliers  # noqa: E402
+from app.routers import auth, incidents, profiles, suppliers, users  # noqa: E402
 
 app = FastAPI(
     title="HealthCore API",
-    description="Incident analysis and supplier directory (TinyDB) endpoints.",
-    version="0.2.0",
+    description="Incident analysis, supplier directory, and staff authentication.",
+    version="0.3.0",
 )
 
 app.add_middleware(
@@ -35,6 +35,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(auth.router)
+app.include_router(users.router)
+app.include_router(profiles.router)
 app.include_router(incidents.router)
 app.include_router(suppliers.router)
 
