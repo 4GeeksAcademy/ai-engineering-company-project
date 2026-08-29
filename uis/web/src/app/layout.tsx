@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Sans } from "next/font/google";
-import { BackofficeShell } from "@/components/BackofficeShell";
 import "./globals.css";
 
 const ibmPlex = IBM_Plex_Sans({
@@ -23,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${ibmPlex.variable} bg-slate-100 font-sans text-slate-900 antialiased`}>
-        <BackofficeShell>{children}</BackofficeShell>
+        {children}
       </body>
     </html>
   );

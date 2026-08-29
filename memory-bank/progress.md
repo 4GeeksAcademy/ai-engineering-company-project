@@ -2,39 +2,48 @@
 
 ## Current state
 
-Supplier Directory (Milestone 09) implemented: TinyDB + Pydantic API under `services/api/`, UI under `uis/web/` at `/suppliers` (internal app formerly called backoffice; `uis/backoffice` is empty/unused).
+Error-handling implementation is **complete** (not archived). Guide remains at root [`error-handling-context.md`](../error-handling-context.md) until you ask to archive it. Branch `auth_api`.
 
 ## Completed
 
-- Milestone 1–4 prior deliverables; Incident analyzer CLI + Phase 2 API/UI
-- Supplier TinyDB models, seeder (`uv run seed`), endpoints POST/GET/PATCH
-- Backoffice supplier page: client-side filters, register form with 422 errors, inline rate + status updates, active vs suspended styling
+- Shared `toUserMessage` / `parseError` (no raw `detail` in UI), `ErrorBanner`, `uis/web` `app/error.tsx`, `apiFetch` timeout
+- Forgot-password catch + retry; AuthProvider 401 vs outage; auth forms; suppliers retry + row busy; IncidentAnalyzer uses `parseError`
+- FastAPI global sanitized 500; incident `LoadError` mapped to stable 400; supplier 422 `{detail, errors}`; Resend send failures stay 200
+- CLI export `OSError` → stderr + exit 1
 
 ## Validation results
 
-- `uv run seed` → Seeded 15 suppliers into TinyDB
-- Smoke: GET/POST `/suppliers`, GET `/suppliers/{id}`, PATCH rate/status; invalid UK+USD → 422 Validation failed
-- `npm run typecheck -w uis/web` OK
+- `cd services/api && python3 -m unittest discover -s tests -v`: **29 tests OK** (2026-08-28)
+- `cd scripts && python3 -m unittest discover -s tests -v`: **20 tests OK**
+- `npm run typecheck`: **passed**
+- Dev servers were started for local click-through (`uis/web` :3001, API :8000). Agent did not drive the browser.
+
+## Tests added or updated
+
+- New: `services/api/tests/test_error_handlers.py`, `services/api/tests/test_suppliers_api.py`
+- Updated: `test_incidents_api.py` (stable CSV 400), `test_auth_api.py` (forgot-password send failure still 200), `scripts/tests/test_analyze.py` (missing file, bad UTF-8, export I/O)
 
 ## Blockers
 
-- None for supplier directory MVP.
+- Live password-reset email still needs a local `.env` with `RESEND_API_KEY` if you want real inbox delivery.
 
 ## Next steps
 
-1. Manual UI check at http://localhost:3001/suppliers with API on :8000
-2. Commit/PR when user requests
+1. When you confirm the phase is complete, move `error-handling-context.md` into `memory-bank/archive/`.
+2. Optionally keep smoking `uis/web` in the browser (forgot-password failure, API down on session, suppliers retry, incidents bad CSV).
 
 ## Run commands (durable)
 
 ```bash
 cd services/api
-uv sync
-uv run seed
-uv run uvicorn app.main:app --reload --port 8000
+python3 -m unittest discover -s tests -v
+uvicorn app.main:app --reload --port 8000
 
-npm run dev:web          # :3001 → /suppliers
-npm run typecheck -w uis/web
+cd scripts
+python3 -m unittest discover -s tests -v
+
+npm run dev:web
+npm run typecheck
 ```
 
-Last updated: 2026-08-10
+Last updated: 2026-08-28

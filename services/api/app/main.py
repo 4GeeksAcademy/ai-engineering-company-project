@@ -5,10 +5,16 @@ from __future__ import annotations
 import sys
 from pathlib import Path
 
+import logging
+
 from fastapi import FastAPI, Request
+from fastapi.exception_handlers import http_exception_handler
 from fastapi.exceptions import RequestValidationError
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from starlette.exceptions import HTTPException as StarletteHTTPException
+
+logger = logging.getLogger(__name__)
 
 # Make scripts/ package importable as `src.*` (Phase 1 shared library)
 _REPO_ROOT = Path(__file__).resolve().parents[3]
@@ -16,12 +22,12 @@ _SCRIPTS = _REPO_ROOT / "scripts"
 if str(_SCRIPTS) not in sys.path:
     sys.path.insert(0, str(_SCRIPTS))
 
-from app.routers import incidents, suppliers  # noqa: E402
+from app.routers import auth, incidents, profiles, suppliers, users  # noqa: E402
 
 app = FastAPI(
     title="HealthCore API",
-    description="Incident analysis and supplier directory (TinyDB) endpoints.",
-    version="0.2.0",
+    description="Incident analysis, supplier directory, and staff authentication.",
+    version="0.3.0",
 )
 
 app.add_middleware(
@@ -35,6 +41,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(auth.router)
+app.include_router(users.router)
+app.include_router(profiles.router)
 app.include_router(incidents.router)
 app.include_router(suppliers.router)
 
@@ -56,6 +65,19 @@ async def pydantic_validation_handler(
     return JSONResponse(
         status_code=422,
         content={"detail": "Validation failed", "errors": errors},
+    )
+
+
+@app.exception_handler(Exception)
+async def unhandled_exception_handler(request: Request, exc: Exception) -> JSONResponse:
+    if isinstance(exc, StarletteHTTPException):
+        return await http_exception_handler(request, exc)
+    if isinstance(exc, RequestValidationError):
+        return await pydantic_validation_handler(request, exc)
+    logger.exception("Unhandled server error")
+    return JSONResponse(
+        status_code=500,
+        content={"detail": "Something went wrong. Please try again."},
     )
 
 

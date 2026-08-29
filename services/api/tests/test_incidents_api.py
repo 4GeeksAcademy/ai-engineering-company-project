@@ -2,31 +2,20 @@
 
 from __future__ import annotations
 
-import sys
 import unittest
 from pathlib import Path
 
-API_ROOT = Path(__file__).resolve().parents[1]
-REPO_ROOT = API_ROOT.parents[1]
-SCRIPTS = REPO_ROOT / "scripts"
+from app import store
+from tests.helpers import SCRIPTS, auth_header, client, reset_auth_db
+
 FIXTURE = SCRIPTS / "incidents-healthcore.csv"
-
-# Ensure both the API package root and scripts/ are importable
-for path in (str(API_ROOT), str(SCRIPTS)):
-    if path not in sys.path:
-        sys.path.insert(0, path)
-
-from fastapi.testclient import TestClient  # noqa: E402
-
-from app import store  # noqa: E402
-from app.main import app  # noqa: E402
-
-client = TestClient(app)
 
 
 class IncidentsApiTest(unittest.TestCase):
     def setUp(self) -> None:
         store.clear()
+        reset_auth_db()
+        self.headers = auth_header()
 
     def test_health(self) -> None:
         response = client.get("/health")
@@ -34,16 +23,17 @@ class IncidentsApiTest(unittest.TestCase):
         self.assertEqual(response.json()["status"], "ok")
 
     def test_export_without_analysis_returns_404(self) -> None:
-        response = client.get("/api/incidents/results/export")
+        response = client.get("/api/incidents/results/export", headers=self.headers)
         self.assertEqual(response.status_code, 404)
 
     def test_analyze_missing_file_returns_400(self) -> None:
-        response = client.post("/api/incidents/analyze")
+        response = client.post("/api/incidents/analyze", headers=self.headers)
         self.assertEqual(response.status_code, 422)
 
     def test_analyze_empty_file_returns_400(self) -> None:
         response = client.post(
             "/api/incidents/analyze",
+            headers=self.headers,
             files={"file": ("empty.csv", b"", "text/csv")},
         )
         self.assertEqual(response.status_code, 400)
@@ -51,6 +41,7 @@ class IncidentsApiTest(unittest.TestCase):
     def test_analyze_non_csv_returns_400(self) -> None:
         response = client.post(
             "/api/incidents/analyze",
+            headers=self.headers,
             files={"file": ("notes.txt", b"hello", "text/plain")},
         )
         self.assertEqual(response.status_code, 400)
@@ -60,6 +51,7 @@ class IncidentsApiTest(unittest.TestCase):
         data = FIXTURE.read_bytes()
         response = client.post(
             "/api/incidents/analyze",
+            headers=self.headers,
             files={"file": ("incidents-healthcore.csv", data, "text/csv")},
         )
         self.assertEqual(response.status_code, 200)
@@ -79,15 +71,43 @@ class IncidentsApiTest(unittest.TestCase):
         data = FIXTURE.read_bytes()
         client.post(
             "/api/incidents/analyze",
+            headers=self.headers,
             files={"file": ("incidents-healthcore.csv", data, "text/csv")},
         )
-        response = client.get("/api/incidents/results/export")
+        response = client.get("/api/incidents/results/export", headers=self.headers)
         self.assertEqual(response.status_code, 200)
         self.assertIn("text/csv", response.headers["content-type"])
         text = response.text
         self.assertIn("metric,value,percentage", text)
         self.assertIn("total_records,100", text)
         self.assertNotIn("PAT-", text)
+
+    def test_analyze_missing_headers_returns_stable_400(self) -> None:
+        response = client.post(
+            "/api/incidents/analyze",
+            headers=self.headers,
+            files={"file": ("bad.csv", b"foo,bar\n1,2\n", "text/csv")},
+        )
+        self.assertEqual(response.status_code, 400)
+        detail = response.json()["detail"]
+        self.assertIsInstance(detail, str)
+        self.assertNotIn("Missing required columns:", detail)
+        self.assertIn("columns", detail.lower())
+
+    def test_analyze_non_utf8_returns_stable_400(self) -> None:
+        response = client.post(
+            "/api/incidents/analyze",
+            headers=self.headers,
+            files={"file": ("bad.csv", b"\xff\xfe\x00", "text/csv")},
+        )
+        self.assertEqual(response.status_code, 400)
+        detail = response.json()["detail"]
+        self.assertNotIn("File is not valid UTF-8:", detail)
+        self.assertIn("utf-8", detail.lower())
+
+    def test_analyze_without_token_401(self) -> None:
+        response = client.post("/api/incidents/analyze")
+        self.assertEqual(response.status_code, 401)
 
 
 if __name__ == "__main__":

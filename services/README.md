@@ -10,7 +10,7 @@ Each subfolder inside `services/` must correspond to **one specific service** an
 
 | Service | Path | Purpose |
 |---------|------|---------|
-| HealthCore API (Phase 2) | [`api/`](api/) | FastAPI incident analyze + export endpoints; reuses [`scripts/`](../scripts/) |
+| HealthCore API (Phase 2) | [`api/`](api/) | FastAPI incidents, supplier directory, and staff JWT auth; reuses [`scripts/`](../scripts/) |
 
 ```bash
 cd services/api

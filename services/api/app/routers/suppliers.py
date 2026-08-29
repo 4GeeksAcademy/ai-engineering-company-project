@@ -2,11 +2,15 @@
 
 from __future__ import annotations
 
+import logging
 from datetime import datetime, timezone
 from typing import Optional
 
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi.responses import JSONResponse
 from pydantic import ValidationError
+
+from app.auth.security import get_current_user
 
 from app.suppliers.db import suppliers_table
 from app.suppliers.models import (
@@ -17,7 +21,8 @@ from app.suppliers.models import (
     SupplierUpdate,
 )
 
-router = APIRouter(tags=["suppliers"])
+router = APIRouter(tags=["suppliers"], dependencies=[Depends(get_current_user)])
+logger = logging.getLogger(__name__)
 
 
 def _doc_to_supplier(doc_id: int, doc: dict) -> Supplier:
@@ -26,6 +31,14 @@ def _doc_to_supplier(doc_id: int, doc: dict) -> Supplier:
     if isinstance(data.get("updated_at"), str):
         data["updated_at"] = datetime.fromisoformat(data["updated_at"])
     return Supplier.model_validate(data)
+
+
+def _safe_doc_to_supplier(doc_id: int, doc: dict) -> Supplier | None:
+    try:
+        return _doc_to_supplier(doc_id, doc)
+    except (ValidationError, ValueError, TypeError):
+        logger.warning("Skipping unreadable supplier document id=%s", doc_id)
+        return None
 
 
 @router.post("/suppliers", response_model=Supplier, status_code=201)
@@ -53,7 +66,10 @@ def list_suppliers(
             continue
         if category and category not in (doc.get("categories") or []):
             continue
-        results.append(_doc_to_supplier(doc.doc_id, dict(doc)))
+        parsed = _safe_doc_to_supplier(doc.doc_id, dict(doc))
+        if parsed is None:
+            continue
+        results.append(parsed)
     results.sort(key=lambda s: s.name.lower())
     return results
 
@@ -64,7 +80,12 @@ def get_supplier(supplier_id: int) -> Supplier:
     doc = table.get(doc_id=supplier_id)
     if doc is None:
         raise HTTPException(status_code=404, detail="Supplier not found")
-    return _doc_to_supplier(supplier_id, doc)
+    parsed = _safe_doc_to_supplier(supplier_id, doc)
+    if parsed is None:
+        raise HTTPException(
+            status_code=500, detail="This supplier record could not be read."
+        )
+    return parsed
 
 
 @router.patch("/suppliers/{supplier_id}", response_model=Supplier)
@@ -102,10 +123,10 @@ def update_supplier(supplier_id: int, payload: SupplierUpdate) -> Supplier:
             }
             for err in exc.errors()
         ]
-        raise HTTPException(
+        return JSONResponse(
             status_code=422,
-            detail={"detail": "Validation failed", "errors": errors},
-        ) from exc
+            content={"detail": "Validation failed", "errors": errors},
+        )
 
     stored = validated.model_dump(mode="json")
     if "monthly_rate" in updates:
@@ -117,7 +138,12 @@ def update_supplier(supplier_id: int, payload: SupplierUpdate) -> Supplier:
 
     table.update(stored, doc_ids=[supplier_id])
     refreshed = table.get(doc_id=supplier_id)
-    return _doc_to_supplier(supplier_id, refreshed)
+    parsed = _safe_doc_to_supplier(supplier_id, refreshed)
+    if parsed is None:
+        raise HTTPException(
+            status_code=500, detail="This supplier record could not be read."
+        )
+    return parsed
 
 
 @router.patch("/suppliers/{supplier_id}/rate", response_model=Supplier)

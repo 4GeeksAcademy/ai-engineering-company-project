@@ -1,4 +1,7 @@
-import { apiBaseUrl } from "@/lib/incidentsApi";
+import { apiFetch, parseError, readJson, ApiValidationError, type FieldError } from "@/lib/apiClient";
+
+export { ApiValidationError };
+export type { FieldError };
 
 export const VALID_CATEGORIES = [
   "medical_supplies",
@@ -45,78 +48,44 @@ export type SupplierCreateInput = {
   notes?: string | null;
 };
 
-export type FieldError = { field: string; message: string };
-
-export class ApiValidationError extends Error {
-  errors: FieldError[];
-
-  constructor(message: string, errors: FieldError[]) {
-    super(message);
-    this.errors = errors;
-  }
-}
-
-async function parseError(response: Response): Promise<never> {
-  const payload = await response.json().catch(() => ({}));
-  const errors: FieldError[] = Array.isArray(payload.errors)
-    ? payload.errors
-    : Array.isArray(payload.detail?.errors)
-      ? payload.detail.errors
-      : [];
-
-  if (response.status === 422 || errors.length > 0) {
-    const message =
-      typeof payload.detail === "string"
-        ? payload.detail
-        : payload.detail?.detail || "Validation failed";
-    throw new ApiValidationError(message, errors);
-  }
-
-  const detail =
-    typeof payload.detail === "string"
-      ? payload.detail
-      : "Request failed. Please try again.";
-  throw new Error(detail);
-}
-
 export async function fetchSuppliers(): Promise<Supplier[]> {
-  const response = await fetch(`${apiBaseUrl()}/suppliers`);
+  const response = await apiFetch("/suppliers");
   if (!response.ok) await parseError(response);
-  return response.json();
+  return readJson<Supplier[]>(response);
 }
 
 export async function createSupplier(input: SupplierCreateInput): Promise<Supplier> {
-  const response = await fetch(`${apiBaseUrl()}/suppliers`, {
+  const response = await apiFetch("/suppliers", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(input),
   });
   if (!response.ok) await parseError(response);
-  return response.json();
+  return readJson<Supplier>(response);
 }
 
 export async function updateSupplierRate(
   id: number,
   monthly_rate: number,
 ): Promise<Supplier> {
-  const response = await fetch(`${apiBaseUrl()}/suppliers/${id}/rate`, {
+  const response = await apiFetch(`/suppliers/${id}/rate`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ monthly_rate }),
   });
   if (!response.ok) await parseError(response);
-  return response.json();
+  return readJson<Supplier>(response);
 }
 
 export async function updateSupplierStatus(
   id: number,
   status: SupplierStatus,
 ): Promise<Supplier> {
-  const response = await fetch(`${apiBaseUrl()}/suppliers/${id}/status`, {
+  const response = await apiFetch(`/suppliers/${id}/status`, {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ status }),
   });
   if (!response.ok) await parseError(response);
-  return response.json();
+  return readJson<Supplier>(response);
 }
