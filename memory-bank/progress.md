@@ -2,34 +2,30 @@
 
 ## Current state
 
-On branch `auth_api`. AUTH-01, AUTH-02, and AUTH-03 are implemented in `services/api` and `uis/web`. `uis/website` is unchanged and stays public.
+Staff auth (AUTH-01/02/03) is **complete and archived** under [`archive/2026-08-28-staff-auth/`](archive/2026-08-28-staff-auth/). Branch `auth_api`. No new course milestone is in progress.
 
-## Completed
+Memory bank root files were reset 2026-08-28 to standing facts plus this idle/next-work state. Cursor working rules now include Testing and Edge Cases (`.cursor/rules/global-working-rules.mdc`).
 
-- Milestone 1–4 prior deliverables; Incident analyzer CLI + Phase 2 API/UI
-- Supplier directory TinyDB API + `uis/web` `/suppliers` UI (archived 2026-08-28)
-- AUTH-01: TinyDB `User`/`Profile`, JWT `POST /auth/login`, `get_current_user`, protect suppliers + incidents, `uv run seed-auth`
-- AUTH-02: `uis/web` login/register/profile, AuthGuard (`GET /auth/me`), `localStorage` bearer client
-- AUTH-03: Resend forgot-password, single-use TinyDB reset `jti`, change-password UI + API
-- Cursor `.cursor/rules/global-working-rules.mdc`: Testing and Edge Cases (proportional tests, no weakening tests, report unverified risks)
+## Completed (this reset)
+
+- Archived AUTH iteration with context, spec, progress, decisions, implementation-plan, and tech-updates.
+- Root memory files limited to active-iteration + standing product facts.
 
 ## Validation results
 
-- `python3 -m unittest discover -s tests -v` in `services/api`: **20 tests OK** (2026-08-28). Resend is mocked.
-- `npm run typecheck` (website + `uis/web`): **passed** after removing leftover empty `src/app/{incidents,operations,suppliers}` dirs and stale `.next` types.
-- Real Resend inbox delivery was **not** run (no `RESEND_API_KEY` in this environment).
-- Browser click-through of `uis/web` was **not** run (no browser automation in this session). API TestClient and typecheck were used instead.
+- This change is docs-only (memory-bank layout). No runtime tests.
+- Confirmed archive folder contains the six expected files; root still has `context.md`, `spec.md`, `progress.md`, `decisions.md`.
+- AUTH implementation validation remains as recorded in the archive (20 API tests OK, typecheck passed; live Resend and browser click-through not run).
 
 ## Blockers
 
-- `uv` was missing at the start of this session; `uv` was installed via pip and `services/api/uv.lock` was regenerated with auth packages.
-- Live password-reset email needs a local `.env` with `RESEND_API_KEY` and a permitted `RESEND_FROM_EMAIL`.
+- Live password-reset email still needs a local `.env` with `RESEND_API_KEY` and a permitted `RESEND_FROM_EMAIL`.
 
 ## Next steps
 
 1. Copy `services/api/.env.example` → `.env`, set `SECRET_KEY`, optionally `RESEND_API_KEY`.
-2. Run API + `npm run dev:web`, then manually verify register → login → profile → forgot/reset (with Resend) → change-password.
-3. Commit when the user asks.
+2. Optionally run API + `npm run dev:web` and verify register → login → profile → forgot/reset → change-password.
+3. Start the next course milestone when the user provides it.
 
 ## Run commands (durable)
 
