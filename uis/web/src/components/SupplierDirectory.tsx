@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState, type FormEvent } from "react";
+import { ErrorBanner } from "@/components/ErrorBanner";
+import { toUserMessage } from "@/lib/apiClient";
 import {
   ApiValidationError,
   VALID_CATEGORIES,
@@ -49,6 +51,8 @@ export function SupplierDirectory() {
   const [formErrors, setFormErrors] = useState<FieldError[]>([]);
   const [form, setForm] = useState<FormState>(emptyForm);
   const [submitting, setSubmitting] = useState(false);
+  const [savingRateId, setSavingRateId] = useState<number | null>(null);
+  const [statusBusyId, setStatusBusyId] = useState<number | null>(null);
   const [countryFilter, setCountryFilter] = useState<"ALL" | SupplierCountry>("ALL");
   const [categoryFilter, setCategoryFilter] = useState<string>("ALL");
   const [rateDrafts, setRateDrafts] = useState<Record<number, string>>({});
@@ -63,7 +67,7 @@ export function SupplierDirectory() {
       for (const s of data) drafts[s.id] = String(s.monthly_rate);
       setRateDrafts(drafts);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to load suppliers");
+      setError(toUserMessage(err));
     } finally {
       setLoading(false);
     }
@@ -128,9 +132,9 @@ export function SupplierDirectory() {
     } catch (err) {
       if (err instanceof ApiValidationError) {
         setFormErrors(err.errors);
-        setError(err.message);
+        setError(toUserMessage(err));
       } else {
-        setError(err instanceof Error ? err.message : "Could not create supplier");
+        setError(toUserMessage(err));
       }
     } finally {
       setSubmitting(false);
@@ -145,6 +149,7 @@ export function SupplierDirectory() {
       return;
     }
     setError(null);
+    setSavingRateId(supplier.id);
     try {
       const updated = await updateSupplierRate(supplier.id, next);
       setSuppliers((prev) => prev.map((s) => (s.id === updated.id ? updated : s)));
@@ -152,21 +157,26 @@ export function SupplierDirectory() {
     } catch (err) {
       if (err instanceof ApiValidationError) {
         setFormErrors(err.errors);
-        setError(err.message);
+        setError(toUserMessage(err));
       } else {
-        setError(err instanceof Error ? err.message : "Could not update rate");
+        setError(toUserMessage(err));
       }
+    } finally {
+      setSavingRateId(null);
     }
   };
 
   const toggleStatus = async (supplier: Supplier) => {
     const next: SupplierStatus = supplier.status === "active" ? "suspended" : "active";
     setError(null);
+    setStatusBusyId(supplier.id);
     try {
       const updated = await updateSupplierStatus(supplier.id, next);
       setSuppliers((prev) => prev.map((s) => (s.id === updated.id ? updated : s)));
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Could not update status");
+      setError(toUserMessage(err));
+    } finally {
+      setStatusBusyId(null);
     }
   };
 
@@ -186,10 +196,16 @@ export function SupplierDirectory() {
       </div>
 
       {error ? (
-        <div role="alert" className="rounded-lg border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800">
-          <p className="font-semibold">{error}</p>
+        <div className="space-y-2">
+          <ErrorBanner
+            message={error}
+            onRetry={() => {
+              void load();
+            }}
+            homeHref="/"
+          />
           {formErrors.length > 0 ? (
-            <ul className="mt-2 list-disc space-y-1 pl-5">
+            <ul className="list-disc space-y-1 pl-5 text-sm text-rose-800">
               {formErrors.map((err) => (
                 <li key={`${err.field}-${err.message}`}>
                   <span className="font-medium">{err.field || "field"}:</span> {err.message}
@@ -311,10 +327,11 @@ export function SupplierDirectory() {
                         <span className="text-xs text-slate-500">{supplier.currency}</span>
                         <button
                           type="button"
+                          disabled={savingRateId === supplier.id}
                           onClick={() => void saveRate(supplier)}
-                          className="rounded-md bg-sky-700 px-2 py-1 text-xs font-semibold text-white hover:bg-sky-800"
+                          className="rounded-md bg-sky-700 px-2 py-1 text-xs font-semibold text-white hover:bg-sky-800 disabled:opacity-50"
                         >
-                          Save
+                          {savingRateId === supplier.id ? "Saving…" : "Save"}
                         </button>
                       </div>
                       <p className="mt-1 text-xs text-slate-400">
@@ -336,10 +353,15 @@ export function SupplierDirectory() {
                     <td className="px-4 py-3">
                       <button
                         type="button"
+                        disabled={statusBusyId === supplier.id}
                         onClick={() => void toggleStatus(supplier)}
-                        className="rounded-md border border-slate-300 px-3 py-1 text-xs font-semibold hover:bg-slate-50"
+                        className="rounded-md border border-slate-300 px-3 py-1 text-xs font-semibold hover:bg-slate-50 disabled:opacity-50"
                       >
-                        {suspended ? "Activate" : "Suspend"}
+                        {statusBusyId === supplier.id
+                          ? "Updating…"
+                          : suspended
+                            ? "Activate"
+                            : "Suspend"}
                       </button>
                     </td>
                   </tr>

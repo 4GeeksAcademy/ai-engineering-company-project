@@ -30,5 +30,9 @@ def send_reset_email(*, to_email: str, reset_url: str) -> None:
                 ),
             }
         )
+    except ImportError:
+        logger.exception("Resend package is not available.")
+    except (OSError, TimeoutError, ConnectionError):
+        logger.exception("Network error sending password-reset email.")
     except Exception:
         logger.exception("Failed to send password-reset email.")

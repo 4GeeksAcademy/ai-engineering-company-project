@@ -82,6 +82,29 @@ class IncidentsApiTest(unittest.TestCase):
         self.assertIn("total_records,100", text)
         self.assertNotIn("PAT-", text)
 
+    def test_analyze_missing_headers_returns_stable_400(self) -> None:
+        response = client.post(
+            "/api/incidents/analyze",
+            headers=self.headers,
+            files={"file": ("bad.csv", b"foo,bar\n1,2\n", "text/csv")},
+        )
+        self.assertEqual(response.status_code, 400)
+        detail = response.json()["detail"]
+        self.assertIsInstance(detail, str)
+        self.assertNotIn("Missing required columns:", detail)
+        self.assertIn("columns", detail.lower())
+
+    def test_analyze_non_utf8_returns_stable_400(self) -> None:
+        response = client.post(
+            "/api/incidents/analyze",
+            headers=self.headers,
+            files={"file": ("bad.csv", b"\xff\xfe\x00", "text/csv")},
+        )
+        self.assertEqual(response.status_code, 400)
+        detail = response.json()["detail"]
+        self.assertNotIn("File is not valid UTF-8:", detail)
+        self.assertIn("utf-8", detail.lower())
+
     def test_analyze_without_token_401(self) -> None:
         response = client.post("/api/incidents/analyze")
         self.assertEqual(response.status_code, 401)

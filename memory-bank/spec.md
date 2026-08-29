@@ -8,15 +8,17 @@
 4. Delivery gates: scoped `.agents/rules/`, `skills/pre-delivery-verification` before UI/agent-doc commits, protected paths untouched without instruction.
 5. Backend expansion follows [`docs/architecture_proposal.md`](../docs/architecture_proposal.md) (modular monolith under `services/healthcore-api`, region-split residency, API owns analytics).
 6. **Testing and edge cases:** implementation and validation are one task. Add or update focused tests for new/changed behavior and bug fixes; prefer public interfaces; cover realistic edge cases; run the narrowest relevant checks first. Do not weaken tests to make code pass. If a check cannot be run, state the limitation and what remains unverified. Docs-only changes need no runtime tests.
-7. Shipped auth must keep following [`authentication_context.md`](../authentication_context.md). `uis/website` stays fully public.
+7. Shipped auth stays as documented in standing behavior below (TinyDB User/Profile, JWT bearer, `uis/web` localStorage, Resend reset). `uis/website` stays fully public. The AUTH course contract is archived — do not load it unless asked.
+8. Error-handling work follows root [`error-handling-context.md`](../error-handling-context.md). When that phase is complete, store the file in `memory-bank/archive/` and remove it from repo root.
 
 ## Acceptance criteria
 
 - [x] Required memory-bank files exist at `memory-bank/` root.
 - [x] Completed iterations archived: `2026-07-29-monorepo-ai-frontend`, `2026-08-28-supplier-directory`, `2026-08-28-staff-auth`.
 - [x] Project `AGENTS.md` points at the global memory-bank file names.
-- [ ] Next course milestone not started — no new functional acceptance until the user defines it.
-- [ ] Optional local auth smoke (user env): `.env` with `SECRET_KEY`, register → login → profile → forgot/reset (Resend) → change-password.
+- [x] Root `error-handling-context.md` exists with phase requirements.
+- [x] Error-handling implementation matches that guide (`uis/web`, `services/api`, `scripts/`).
+- [ ] On completion, `error-handling-context.md` is moved into `memory-bank/archive/` (wait for user).
 
 ## Interfaces / expected behavior (standing)
 

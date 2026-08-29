@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { ApiHttpError, ApiValidationError } from "@/lib/apiClient";
+import { toUserMessage } from "@/lib/apiClient";
 import { changePassword } from "@/lib/authApi";
+import { ErrorBanner } from "@/components/ErrorBanner";
 
 export default function ChangePasswordPage() {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -28,11 +29,7 @@ export default function ChangePasswordPage() {
       setNewPassword("");
       setConfirm("");
     } catch (err) {
-      if (err instanceof ApiHttpError || err instanceof ApiValidationError || err instanceof Error) {
-        setError(err.message);
-      } else {
-        setError("Could not update password");
-      }
+      setError(toUserMessage(err));
     } finally {
       setSaving(false);
     }
@@ -42,7 +39,7 @@ export default function ChangePasswordPage() {
     <div className="mx-auto max-w-xl">
       <h2 className="text-2xl font-semibold text-slate-900">Change password</h2>
       <form onSubmit={onSubmit} className="mt-6 space-y-4 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-        {error ? <p className="text-sm text-red-700">{error}</p> : null}
+        {error ? <ErrorBanner message={error} onRetry={() => setError(null)} homeHref="/" /> : null}
         {saved ? <p className="text-sm text-emerald-700">Password updated.</p> : null}
         <label className="block text-sm font-medium text-slate-700">
           Current password

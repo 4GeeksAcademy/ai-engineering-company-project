@@ -3,8 +3,11 @@
 from __future__ import annotations
 
 import csv
+import io
+import sys
 import tempfile
 import unittest
+from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 
 from src.constants import (
@@ -25,6 +28,11 @@ from src.validate import first_invalid_rule, validate_records
 
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURE = ROOT / "incidents-healthcore.csv"
+
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from analyze import main  # noqa: E402
 
 
 def _record(**overrides) -> IncidentRecord:
@@ -184,6 +192,41 @@ class GradedFixtureTest(unittest.TestCase):
                 self.assertEqual(
                     reader.fieldnames, ["metric", "value", "percentage"]
                 )
+
+
+class CliFailureTest(unittest.TestCase):
+    def test_missing_file_exits_one_and_writes_stderr(self) -> None:
+        stderr = io.StringIO()
+        with redirect_stderr(stderr):
+            code = main(["/no/such/incidents.csv"])
+        self.assertEqual(code, 1)
+        self.assertIn("Error:", stderr.getvalue())
+
+    def test_non_utf8_file_exits_one(self) -> None:
+        with tempfile.NamedTemporaryFile(suffix=".csv", delete=False) as handle:
+            handle.write(b"\xff\xfe not utf8")
+            path = handle.name
+        stderr = io.StringIO()
+        try:
+            with redirect_stderr(stderr):
+                code = main([path])
+        finally:
+            Path(path).unlink(missing_ok=True)
+        self.assertEqual(code, 1)
+        self.assertIn("Error:", stderr.getvalue())
+
+    def test_export_oserror_exits_one_without_success(self) -> None:
+        if not FIXTURE.is_file():
+            self.skipTest(f"Missing fixture: {FIXTURE}")
+        stdout = io.StringIO()
+        stderr = io.StringIO()
+        with tempfile.TemporaryDirectory() as tmp:
+            export_path = str(Path(tmp) / "missing-dir" / "metrics.csv")
+            with redirect_stdout(stdout), redirect_stderr(stderr):
+                code = main([str(FIXTURE), "--export", export_path])
+        self.assertEqual(code, 1)
+        self.assertIn("Error:", stderr.getvalue())
+        self.assertNotIn("Metrics exported", stdout.getvalue())
 
 
 if __name__ == "__main__":

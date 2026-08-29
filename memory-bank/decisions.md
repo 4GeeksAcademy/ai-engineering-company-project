@@ -1,12 +1,17 @@
 # Decisions — Active iteration
 
-Standing decisions that still constrain work. Completed-iteration snapshots: [`archive/2026-07-29-monorepo-ai-frontend/`](archive/2026-07-29-monorepo-ai-frontend/), [`archive/2026-08-28-supplier-directory/`](archive/2026-08-28-supplier-directory/), [`archive/2026-08-28-staff-auth/`](archive/2026-08-28-staff-auth/). Architecture rationale: [`docs/architecture_proposal.md`](../docs/architecture_proposal.md). Auth contract: [`authentication_context.md`](../authentication_context.md).
+Standing decisions that still constrain work. Completed-iteration snapshots: [`archive/2026-07-29-monorepo-ai-frontend/`](archive/2026-07-29-monorepo-ai-frontend/), [`archive/2026-08-28-supplier-directory/`](archive/2026-08-28-supplier-directory/), [`archive/2026-08-28-staff-auth/`](archive/2026-08-28-staff-auth/). Architecture rationale: [`docs/architecture_proposal.md`](../docs/architecture_proposal.md). AUTH course contract lives in the staff-auth archive (do not load unless asked).
 
 ## Adopted
 
 | Decision | Rationale |
 |----------|-----------|
 | Project memory bank uses global layout (`context`, `spec`, `progress`, `decisions`, `archive/YYYY-MM-DD-name/` with plan + tech-updates) | Aligns with global working rules; keeps active files concise |
+| Finished course contracts live in `archive/`, not repo root or the four active files | AUTH moved there after completion; same for `error-handling-context.md` when that phase is done |
+| Active phase guides stay at repo root until the phase is complete | `error-handling-context.md` is the error-handling guide; keep it out of `memory-bank/` until done |
+| User-facing API errors go through `toUserMessage` / status maps, never raw `detail` or `Error.message` | Course forbids stack traces, status codes, and parse errors in the UI |
+| FastAPI unhandled exceptions return a fixed 500 JSON body; logs stay server-side | Prevents traceback/secret leaks to clients |
+| Website enquiry form stays client-only (no new enquiry API) | Wiring persistence would be a new feature |
 | Implementation and validation are one task (proportional tests, realistic edge cases, report unverified risks) | Cursor `.cursor/rules/global-working-rules.mdc`; docs-only work needs no runtime tests |
 | Domain-driven **modular monolith** on **FastAPI** under `services/healthcore-api` | Fits six-person tech team; extraction seams later |
 | Backend becomes owner of Milestone 2 analytics (port to Python; TS `src/` legacy after parity) | PHI-adjacent ops analytics; avoid dual formulas |

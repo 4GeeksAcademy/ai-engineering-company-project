@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState, type FormEvent } from "react";
-import { ApiHttpError, ApiValidationError } from "@/lib/apiClient";
+import { toUserMessage } from "@/lib/apiClient";
 import { resetPassword } from "@/lib/authApi";
+import { ErrorBanner } from "@/components/ErrorBanner";
 
 function ResetForm() {
   const router = useRouter();
@@ -27,9 +28,7 @@ function ResetForm() {
       await resetPassword(token, newPassword);
       router.replace("/login?reset=1");
     } catch (err) {
-      setError(err instanceof ApiHttpError || err instanceof ApiValidationError || err instanceof Error
-        ? err.message
-        : "Reset failed");
+      setError(toUserMessage(err));
     } finally {
       setSubmitting(false);
     }
@@ -41,12 +40,12 @@ function ResetForm() {
       <h1 className="mt-2 text-2xl font-semibold text-slate-900">Reset password</h1>
       <form onSubmit={onSubmit} className="mt-6 space-y-4 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
         {error ? (
-          <p className="text-sm text-red-700">
-            {error}{" "}
-            <Link className="font-semibold underline" href="/forgot-password">
-              Request a new link
-            </Link>
-          </p>
+          <ErrorBanner
+            message={error}
+            onRetry={() => setError(null)}
+            homeHref="/forgot-password"
+            homeLabel="Request a new link"
+          />
         ) : null}
         {!token ? (
           <p className="text-sm text-red-700">

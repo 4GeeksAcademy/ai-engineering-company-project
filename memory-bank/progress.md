@@ -2,45 +2,48 @@
 
 ## Current state
 
-Staff auth (AUTH-01/02/03) is **complete and archived** under [`archive/2026-08-28-staff-auth/`](archive/2026-08-28-staff-auth/). Branch `auth_api`. No new course milestone is in progress.
+Error-handling implementation is **complete** (not archived). Guide remains at root [`error-handling-context.md`](../error-handling-context.md) until you ask to archive it. Branch `auth_api`.
 
-Memory bank root files were reset 2026-08-28 to standing facts plus this idle/next-work state. Cursor working rules now include Testing and Edge Cases (`.cursor/rules/global-working-rules.mdc`).
+## Completed
 
-## Completed (this reset)
-
-- Archived AUTH iteration with context, spec, progress, decisions, implementation-plan, and tech-updates.
-- Root memory files limited to active-iteration + standing product facts.
+- Shared `toUserMessage` / `parseError` (no raw `detail` in UI), `ErrorBanner`, `uis/web` `app/error.tsx`, `apiFetch` timeout
+- Forgot-password catch + retry; AuthProvider 401 vs outage; auth forms; suppliers retry + row busy; IncidentAnalyzer uses `parseError`
+- FastAPI global sanitized 500; incident `LoadError` mapped to stable 400; supplier 422 `{detail, errors}`; Resend send failures stay 200
+- CLI export `OSError` → stderr + exit 1
 
 ## Validation results
 
-- This change is docs-only (memory-bank layout). No runtime tests.
-- Confirmed archive folder contains the six expected files; root still has `context.md`, `spec.md`, `progress.md`, `decisions.md`.
-- AUTH implementation validation remains as recorded in the archive (20 API tests OK, typecheck passed; live Resend and browser click-through not run).
+- `cd services/api && python3 -m unittest discover -s tests -v`: **29 tests OK** (2026-08-28)
+- `cd scripts && python3 -m unittest discover -s tests -v`: **20 tests OK**
+- `npm run typecheck`: **passed**
+- Dev servers were started for local click-through (`uis/web` :3001, API :8000). Agent did not drive the browser.
+
+## Tests added or updated
+
+- New: `services/api/tests/test_error_handlers.py`, `services/api/tests/test_suppliers_api.py`
+- Updated: `test_incidents_api.py` (stable CSV 400), `test_auth_api.py` (forgot-password send failure still 200), `scripts/tests/test_analyze.py` (missing file, bad UTF-8, export I/O)
 
 ## Blockers
 
-- Live password-reset email still needs a local `.env` with `RESEND_API_KEY` and a permitted `RESEND_FROM_EMAIL`.
+- Live password-reset email still needs a local `.env` with `RESEND_API_KEY` if you want real inbox delivery.
 
 ## Next steps
 
-1. Copy `services/api/.env.example` → `.env`, set `SECRET_KEY`, optionally `RESEND_API_KEY`.
-2. Optionally run API + `npm run dev:web` and verify register → login → profile → forgot/reset → change-password.
-3. Start the next course milestone when the user provides it.
+1. When you confirm the phase is complete, move `error-handling-context.md` into `memory-bank/archive/`.
+2. Optionally keep smoking `uis/web` in the browser (forgot-password failure, API down on session, suppliers retry, incidents bad CSV).
 
 ## Run commands (durable)
 
 ```bash
 cd services/api
-cp .env.example .env   # set SECRET_KEY
-python3 -m pip install -r requirements.txt
-python3 -m app.auth.seed
 python3 -m unittest discover -s tests -v
 uvicorn app.main:app --reload --port 8000
 
-npm run dev:web          # :3001 → /login
+cd scripts
+python3 -m unittest discover -s tests -v
+
+npm run dev:web
 npm run typecheck
 ```
-
-If `uv` is available: `uv sync`, `uv run seed`, `uv run seed-auth`, `uv run uvicorn app.main:app --reload --port 8000`.
 
 Last updated: 2026-08-28

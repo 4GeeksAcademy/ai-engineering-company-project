@@ -126,6 +126,19 @@ class AuthApiTest(unittest.TestCase):
             self.assertEqual(known.status_code, 200)
             mocked.assert_called_once()
 
+    def test_forgot_password_still_200_when_email_send_fails(self) -> None:
+        register(email="reset-fail@healthcore.example")
+        with patch(
+            "app.routers.auth.send_reset_email",
+            side_effect=OSError("network down"),
+        ):
+            response = client.post(
+                "/auth/forgot-password",
+                json={"email": "reset-fail@healthcore.example"},
+            )
+        self.assertEqual(response.status_code, 200)
+        self.assertNotIn("network down", response.text)
+
     def test_reset_token_single_use(self) -> None:
         register(email="reset2@healthcore.example")
         user = get_user_by_email("reset2@healthcore.example")

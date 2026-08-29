@@ -1,6 +1,6 @@
 # Implementation plan — Staff auth (archived)
 
-Completed 2026-08-28 on branch `auth_api`. Course contract remains at root [`authentication_context.md`](../../../authentication_context.md).
+Completed 2026-08-28 on branch `auth_api`. Course contract archived as [`authentication_context.md`](authentication_context.md).
 
 ## Delivered
 

@@ -2,16 +2,16 @@
 
 ## Goal
 
-Operate HealthCore Digital’s monorepo so agents and engineers can safely extend the public website, internal web UI, and backend APIs without losing company or technical context.
+Apply a consistent error-handling strategy across the existing HealthCore monorepo (frontend, API, scripts). The phase guide is root [`error-handling-context.md`](../error-handling-context.md). When you confirm this phase is complete, move that file into `memory-bank/archive/`.
 
 ## Scope (active)
 
+- Error-handling implementation is **done** pending your archive/commit. Follow [`error-handling-context.md`](../error-handling-context.md) if more work is requested.
 - Keep shipped UIs runnable: `uis/website` (public), `uis/web` (staff JWT).
 - Phase 1 incident CLI: [`scripts/`](../scripts/).
 - Phase 2 API: [`services/api/`](../services/api/) — incidents, suppliers, staff JWT auth.
 - Treat [`docs/architecture_proposal.md`](../docs/architecture_proposal.md) as the blueprint before expanding beyond Phase 2.
 - Do **not** invent production PHI flows or EHR integrations without explicit instruction.
-- No new course milestone is in progress. Next work is whatever the user requests (local auth smoke, or the next syllabus item).
 
 ## Constraints
 
@@ -34,6 +34,7 @@ Completed iterations (do not load unless asked): `archive/2026-07-29-monorepo-ai
 | Path | Role |
 |------|------|
 | `CONTEXT.md` | Company briefing |
+| `error-handling-context.md` | Error-handling phase guide (root until complete; then archive) |
 | `AGENTS.md` | Project agent operating rules |
 | `memory-bank/*` | Active iteration memory |
 | `docs/architecture_proposal.md` | Backend architecture decisions |
@@ -41,7 +42,6 @@ Completed iterations (do not load unless asked): `archive/2026-07-29-monorepo-ai
 | `uis/web/` | Internal Next.js UI (login + ops + incidents + suppliers) |
 | `scripts/` | Phase 1 analyze.py + CSV + shared validation |
 | `services/api/` | FastAPI: incidents + suppliers + TinyDB users/profiles + JWT |
-| `authentication_context.md` | AUTH-01/02/03 course contract (shipped) |
 | `src/types/`, `src/utils/` | Milestone 2 domain logic (legacy-to-API path) |
 | `.agents/rules/` | Scoped path rules |
 | `.cursor/rules/global-working-rules.mdc` | Always-on working rules, including testing |
