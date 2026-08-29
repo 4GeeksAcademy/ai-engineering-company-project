@@ -11,6 +11,7 @@ On branch `auth_api`. AUTH-01, AUTH-02, and AUTH-03 are implemented in `services
 - AUTH-01: TinyDB `User`/`Profile`, JWT `POST /auth/login`, `get_current_user`, protect suppliers + incidents, `uv run seed-auth`
 - AUTH-02: `uis/web` login/register/profile, AuthGuard (`GET /auth/me`), `localStorage` bearer client
 - AUTH-03: Resend forgot-password, single-use TinyDB reset `jti`, change-password UI + API
+- Cursor `.cursor/rules/global-working-rules.mdc`: Testing and Edge Cases (proportional tests, no weakening tests, report unverified risks)
 
 ## Validation results
 
