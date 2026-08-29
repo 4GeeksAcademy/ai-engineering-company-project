@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import logging
+
 from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
 from fastapi.responses import Response
 
@@ -13,6 +15,8 @@ from src.summarize import AnalysisSummary, summarize
 from src.validate import validate_records
 
 from app.auth.security import get_current_user
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter(
     prefix="/api/incidents",
@@ -55,11 +59,21 @@ def summary_to_json(summary: AnalysisSummary) -> dict:
     }
 
 
+def _client_load_error_detail(exc: LoadError) -> str:
+    text = str(exc).lower()
+    if "utf-8" in text:
+        return "The file is not valid UTF-8. Please upload a UTF-8 CSV."
+    if "missing required columns" in text:
+        return "The CSV is missing required columns. Please use a HealthCore incident export."
+    if "header" in text:
+        return "The CSV has no header row. Please use a HealthCore incident export."
+    if "empty" in text:
+        return "The uploaded file is empty."
+    return "We could not read that CSV. Please check the file and try again."
+
+
 @router.post("/analyze")
 async def analyze_incidents(file: UploadFile = File(...)) -> dict:
-    if file is None:
-        raise HTTPException(status_code=400, detail="Missing file upload")
-
     filename = file.filename or "upload.csv"
     if not filename.lower().endswith(".csv"):
         raise HTTPException(
@@ -74,7 +88,10 @@ async def analyze_incidents(file: UploadFile = File(...)) -> dict:
     try:
         records = load_incidents_from_bytes(data)
     except LoadError as exc:
-        raise HTTPException(status_code=400, detail=str(exc)) from exc
+        logger.info("Incident CSV could not be loaded: %s", type(exc).__name__)
+        raise HTTPException(
+            status_code=400, detail=_client_load_error_detail(exc)
+        ) from exc
 
     result = validate_records(records)
     summary = summarize(result, source_file=filename)

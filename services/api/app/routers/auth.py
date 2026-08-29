@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import logging
 from datetime import datetime, timedelta, timezone
 from typing import Any
 from urllib.parse import quote
@@ -40,6 +41,7 @@ from app.auth.service import (
 )
 
 router = APIRouter(prefix="/auth", tags=["auth"])
+logger = logging.getLogger(__name__)
 
 GENERIC_FORGOT = "If that address is registered, you'll receive a link shortly."
 
@@ -93,7 +95,10 @@ def forgot_password(payload: ForgotPasswordRequest) -> MessageResponse:
         reset_url = (
             f"{config.frontend_base_url()}/reset-password?token={quote(token, safe='')}"
         )
-        send_reset_email(to_email=user["email"], reset_url=reset_url)
+        try:
+            send_reset_email(to_email=user["email"], reset_url=reset_url)
+        except Exception:
+            logger.exception("Forgot-password email failed")
     return MessageResponse(detail=GENERIC_FORGOT)
 
 

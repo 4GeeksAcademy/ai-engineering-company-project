@@ -1,4 +1,4 @@
-import { apiFetch, parseError, setAccessToken } from "@/lib/apiClient";
+import { apiFetch, parseError, readJson, setAccessToken } from "@/lib/apiClient";
 
 export type Role = "admin" | "manager" | "user";
 
@@ -27,7 +27,7 @@ export async function loginRequest(email: string, password: string): Promise<str
     body,
   });
   if (!response.ok) await parseError(response);
-  const payload = (await response.json()) as { access_token: string };
+  const payload = await readJson<{ access_token: string }>(response);
   setAccessToken(payload.access_token);
   return payload.access_token;
 }
@@ -50,9 +50,9 @@ export async function registerRequest(input: {
 }
 
 export async function fetchMe(): Promise<MeResponse> {
-  const response = await apiFetch("/auth/me");
+  const response = await apiFetch("/auth/me", { redirectOn401: false });
   if (!response.ok) await parseError(response);
-  return response.json();
+  return readJson<MeResponse>(response);
 }
 
 export async function updateMyProfile(input: {
@@ -66,7 +66,7 @@ export async function updateMyProfile(input: {
     body: JSON.stringify(input),
   });
   if (!response.ok) await parseError(response);
-  return response.json();
+  return readJson<Profile>(response);
 }
 
 export async function forgotPassword(email: string): Promise<string> {
@@ -77,7 +77,7 @@ export async function forgotPassword(email: string): Promise<string> {
     body: JSON.stringify({ email }),
   });
   if (!response.ok) await parseError(response);
-  const payload = (await response.json()) as { detail: string };
+  const payload = await readJson<{ detail: string }>(response);
   return payload.detail;
 }
 

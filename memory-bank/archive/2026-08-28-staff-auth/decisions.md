@@ -1,6 +1,6 @@
 # Decisions — Staff auth (archived 2026-08-28)
 
-Course contract: [`authentication_context.md`](../../../authentication_context.md).
+Course contract: [`authentication_context.md`](authentication_context.md).
 
 ## Adopted (this iteration)
 

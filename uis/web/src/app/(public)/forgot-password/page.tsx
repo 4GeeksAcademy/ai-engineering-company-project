@@ -2,19 +2,25 @@
 
 import Link from "next/link";
 import { useState, type FormEvent } from "react";
+import { ErrorBanner } from "@/components/ErrorBanner";
+import { toUserMessage } from "@/lib/apiClient";
 import { forgotPassword } from "@/lib/authApi";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
   const [done, setDone] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
   const onSubmit = async (event: FormEvent) => {
     event.preventDefault();
     setSubmitting(true);
+    setError(null);
     try {
       await forgotPassword(email);
       setDone(true);
+    } catch (err) {
+      setError(toUserMessage(err));
     } finally {
       setSubmitting(false);
     }
@@ -25,6 +31,16 @@ export default function ForgotPasswordPage() {
       <p className="text-xs font-semibold uppercase tracking-[0.18em] text-sky-700">HealthCore Digital</p>
       <h1 className="mt-2 text-2xl font-semibold text-slate-900">Forgot password</h1>
       <form onSubmit={onSubmit} className="mt-6 space-y-4 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
+        {error ? (
+          <ErrorBanner
+            message={error}
+            onRetry={() => {
+              setError(null);
+            }}
+            homeHref="/login"
+            homeLabel="Back to sign in"
+          />
+        ) : null}
         {done ? (
           <p className="text-sm text-slate-700">
             If that address is registered, you&apos;ll receive a link shortly.

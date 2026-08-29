@@ -2,7 +2,7 @@
 
 ## Requirements
 
-1. Follow [`authentication_context.md`](../../../authentication_context.md): TinyDB User/Profile, JWT bearer, `uis/web` localStorage token, Resend reset email.
+1. Follow [`authentication_context.md`](authentication_context.md): TinyDB User/Profile, JWT bearer, `uis/web` localStorage token, Resend reset email.
 2. `uis/website` stays fully public.
 3. Auth lives in existing `services/api`, not a new app.
 

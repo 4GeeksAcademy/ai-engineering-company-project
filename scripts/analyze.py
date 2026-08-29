@@ -74,7 +74,11 @@ def main(argv: list[str] | None = None) -> int:
         export_path = Path("incident_metrics_export.csv")
 
     if export_path is not None:
-        written = export_metrics_csv(summary, export_path)
+        try:
+            written = export_metrics_csv(summary, export_path)
+        except OSError as exc:
+            print(f"Error: unable to write export file: {exc}", file=sys.stderr)
+            return 1
         print(f"Metrics exported to: {written}")
 
     return 0

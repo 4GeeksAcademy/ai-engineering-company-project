@@ -2,7 +2,8 @@
 
 import { useState, type FormEvent } from "react";
 import { useAuth } from "@/components/AuthProvider";
-import { ApiValidationError } from "@/lib/apiClient";
+import { ErrorBanner } from "@/components/ErrorBanner";
+import { toUserMessage } from "@/lib/apiClient";
 import { updateMyProfile } from "@/lib/authApi";
 
 export default function ProfilePage() {
@@ -28,7 +29,7 @@ export default function ProfilePage() {
       await refresh();
       setSaved(true);
     } catch (err) {
-      setError(err instanceof ApiValidationError || err instanceof Error ? err.message : "Save failed");
+      setError(toUserMessage(err));
     } finally {
       setSaving(false);
     }
@@ -39,7 +40,7 @@ export default function ProfilePage() {
       <h2 className="text-2xl font-semibold text-slate-900">Account profile</h2>
       <p className="mt-2 text-sm text-slate-600">Email comes from your user account. Name and contact live on your profile.</p>
       <form onSubmit={onSubmit} className="mt-6 space-y-4 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-        {error ? <p className="text-sm text-red-700">{error}</p> : null}
+        {error ? <ErrorBanner message={error} onRetry={() => setError(null)} homeHref="/" /> : null}
         {saved ? <p className="text-sm text-emerald-700">Profile saved.</p> : null}
         <label className="block text-sm font-medium text-slate-700">
           Email

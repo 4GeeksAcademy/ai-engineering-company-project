@@ -1,4 +1,4 @@
-import { apiFetch, parseError, ApiValidationError, type FieldError } from "@/lib/apiClient";
+import { apiFetch, parseError, readJson, ApiValidationError, type FieldError } from "@/lib/apiClient";
 
 export { ApiValidationError };
 export type { FieldError };
@@ -51,7 +51,7 @@ export type SupplierCreateInput = {
 export async function fetchSuppliers(): Promise<Supplier[]> {
   const response = await apiFetch("/suppliers");
   if (!response.ok) await parseError(response);
-  return response.json();
+  return readJson<Supplier[]>(response);
 }
 
 export async function createSupplier(input: SupplierCreateInput): Promise<Supplier> {
@@ -61,7 +61,7 @@ export async function createSupplier(input: SupplierCreateInput): Promise<Suppli
     body: JSON.stringify(input),
   });
   if (!response.ok) await parseError(response);
-  return response.json();
+  return readJson<Supplier>(response);
 }
 
 export async function updateSupplierRate(
@@ -74,7 +74,7 @@ export async function updateSupplierRate(
     body: JSON.stringify({ monthly_rate }),
   });
   if (!response.ok) await parseError(response);
-  return response.json();
+  return readJson<Supplier>(response);
 }
 
 export async function updateSupplierStatus(
@@ -87,5 +87,5 @@ export async function updateSupplierStatus(
     body: JSON.stringify({ status }),
   });
   if (!response.ok) await parseError(response);
-  return response.json();
+  return readJson<Supplier>(response);
 }

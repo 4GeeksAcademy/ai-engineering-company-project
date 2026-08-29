@@ -1,7 +1,8 @@
 "use client";
 
 import { useCallback, useRef, useState, type DragEvent } from "react";
-import { apiFetch } from "@/lib/apiClient";
+import { ErrorBanner } from "@/components/ErrorBanner";
+import { apiFetch, parseError, toUserMessage } from "@/lib/apiClient";
 import { type IncidentAnalysisResult } from "@/lib/incidentsApi";
 
 const SATISFACTION_LABELS: Record<string, string> = {
@@ -57,22 +58,32 @@ export function IncidentAnalyzer() {
     try {
       const body = new FormData();
       body.append("file", file);
-      const response = await apiFetch("/api/incidents/analyze", {
-        method: "POST",
-        body,
-      });
-      const payload = await response.json().catch(() => ({}));
-      if (!response.ok) {
-        const detail =
-          typeof payload.detail === "string"
-            ? payload.detail
-            : "Analysis failed. Check the file and try again.";
-        throw new Error(detail);
+      let response: Response;
+      try {
+        response = await apiFetch("/api/incidents/analyze", {
+          method: "POST",
+          body,
+        });
+      } catch (err) {
+        setResult(null);
+        setError(toUserMessage(err));
+        return;
       }
-      setResult(payload as IncidentAnalysisResult);
+      if (!response.ok) {
+        await parseError(response);
+      }
+      let payload: IncidentAnalysisResult;
+      try {
+        payload = (await response.json()) as IncidentAnalysisResult;
+      } catch {
+        setResult(null);
+        setError("We could not read the analysis result. Please try again.");
+        return;
+      }
+      setResult(payload);
     } catch (err) {
       setResult(null);
-      setError(err instanceof Error ? err.message : "Network error talking to the API.");
+      setError(toUserMessage(err));
     } finally {
       setLoading(false);
     }
@@ -82,15 +93,15 @@ export function IncidentAnalyzer() {
     setExporting(true);
     setError(null);
     try {
-      const response = await apiFetch("/api/incidents/results/export");
-      if (response.status === 404) {
-        throw new Error("No analysis results available. Upload a CSV first.");
+      let response: Response;
+      try {
+        response = await apiFetch("/api/incidents/results/export");
+      } catch (err) {
+        setError(toUserMessage(err));
+        return;
       }
       if (!response.ok) {
-        const payload = await response.json().catch(() => ({}));
-        throw new Error(
-          typeof payload.detail === "string" ? payload.detail : "Export failed.",
-        );
+        await parseError(response);
       }
       const blob = await response.blob();
       const url = URL.createObjectURL(blob);
@@ -100,7 +111,7 @@ export function IncidentAnalyzer() {
       anchor.click();
       URL.revokeObjectURL(url);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Export failed.");
+      setError(toUserMessage(err));
     } finally {
       setExporting(false);
     }
@@ -176,12 +187,15 @@ export function IncidentAnalyzer() {
       </div>
 
       {error ? (
-        <div
-          role="alert"
-          className="rounded-lg border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800"
-        >
-          {error}
-        </div>
+        <ErrorBanner
+          message={error}
+          onRetry={() => {
+            if (file) void analyze();
+            else setError(null);
+          }}
+          retryLabel={file ? "Try again" : "Dismiss"}
+          homeHref="/"
+        />
       ) : null}
 
       {result ? (

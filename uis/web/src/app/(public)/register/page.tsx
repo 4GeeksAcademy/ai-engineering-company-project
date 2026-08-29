@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
-import { ApiValidationError } from "@/lib/apiClient";
+import { ApiValidationError, toUserMessage } from "@/lib/apiClient";
 import { registerRequest } from "@/lib/authApi";
+import { ErrorBanner } from "@/components/ErrorBanner";
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -33,10 +34,10 @@ export default function RegisterPage() {
       router.replace("/");
     } catch (err) {
       if (err instanceof ApiValidationError) {
-        setError(err.message);
+        setError(toUserMessage(err));
         setFieldErrors(err.errors);
       } else {
-        setError(err instanceof Error ? err.message : "Registration failed");
+        setError(toUserMessage(err));
       }
     } finally {
       setSubmitting(false);
@@ -48,7 +49,9 @@ export default function RegisterPage() {
       <p className="text-xs font-semibold uppercase tracking-[0.18em] text-sky-700">HealthCore Digital</p>
       <h1 className="mt-2 text-2xl font-semibold text-slate-900">Register</h1>
       <form onSubmit={onSubmit} className="mt-6 space-y-4 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
-        {error ? <p className="text-sm text-red-700">{error}</p> : null}
+        {error ? (
+          <ErrorBanner message={error} onRetry={() => setError(null)} homeHref="/login" homeLabel="Back to sign in" />
+        ) : null}
         {fieldErrors.length > 0 ? (
           <ul className="list-disc pl-5 text-sm text-red-700">
             {fieldErrors.map((err) => (

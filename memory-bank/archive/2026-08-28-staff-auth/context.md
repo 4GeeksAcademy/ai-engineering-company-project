@@ -1,6 +1,6 @@
 # Context — Staff auth (AUTH-01/02/03, archived 2026-08-28)
 
-Course contract (unchanged at repo root): [`authentication_context.md`](../../../authentication_context.md).
+Course contract (archived here): [`authentication_context.md`](authentication_context.md).
 
 ## Goal
 
@@ -27,7 +27,7 @@ HealthCore: 12 outpatient clinics (US + UK). Phase 2 API already had incidents +
 
 | Path | Role |
 |------|------|
-| `authentication_context.md` | AUTH-01/02/03 course contract |
+| `authentication_context.md` (this folder) | AUTH-01/02/03 course contract |
 | `services/api/app/auth/` | FastAPI auth module |
 | `uis/web/src/app/(public)/` | login, register, forgot/reset |
 | `uis/web/src/app/(protected)/` | welcome, ops, incidents, suppliers, profile, change-password |

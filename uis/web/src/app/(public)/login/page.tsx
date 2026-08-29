@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState, type FormEvent } from "react";
-import { ApiHttpError, ApiValidationError } from "@/lib/apiClient";
+import { toUserMessage } from "@/lib/apiClient";
 import { loginRequest } from "@/lib/authApi";
+import { ErrorBanner } from "@/components/ErrorBanner";
 
 function LoginForm() {
   const router = useRouter();
@@ -23,9 +24,7 @@ function LoginForm() {
       await loginRequest(email, password);
       router.replace("/");
     } catch (err) {
-      setError(err instanceof ApiHttpError || err instanceof ApiValidationError || err instanceof Error
-        ? err.message
-        : "Sign in failed");
+      setError(toUserMessage(err));
     } finally {
       setSubmitting(false);
     }
@@ -37,7 +36,14 @@ function LoginForm() {
       <h1 className="mt-2 text-2xl font-semibold text-slate-900">Sign in</h1>
       <form onSubmit={onSubmit} className="mt-6 space-y-4 rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
         {resetOk ? <p className="text-sm text-emerald-700">Password updated. Sign in with your new password.</p> : null}
-        {error ? <p className="text-sm text-red-700">{error}</p> : null}
+        {error ? (
+          <ErrorBanner
+            message={error}
+            onRetry={() => setError(null)}
+            homeHref="/forgot-password"
+            homeLabel="Forgot your password?"
+          />
+        ) : null}
         <label className="block text-sm font-medium text-slate-700">
           Email
           <input
