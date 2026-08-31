@@ -66,3 +66,29 @@ Follow these steps **in order**. Do not skip.
 ## Skill for recurring delivery checks
 
 Use **`skills/pre-delivery-verification`** before every commit that changes UI, agent scaffolding, or docs that affect delivery status (when a commit is requested).
+
+## Testing and Edge Cases
+
+Treat implementation and validation as one task. Code changes are not complete until they have been tested in proportion to their risk.
+
+After writing or modifying code:
+
+- Identify the behavior affected and inspect the project’s existing testing patterns.
+- Add or update focused tests for new behavior, changed behavior, and bug fixes. When fixing a bug, include a regression test that would have caught it.
+- Test observable behavior and public interfaces rather than internal implementation details.
+- Consider relevant edge cases, including empty or missing values, boundary values, malformed input, duplicate data, unexpected ordering, failure responses, timeouts, and partial operations. Also consider concurrency, permissions, security, accessibility, and platform differences when they apply.
+- Prioritize realistic edge cases based on the feature’s requirements and likely failure modes. Do not add speculative tests for situations the system cannot encounter.
+- Run the narrowest relevant tests first, followed by applicable type checks, lint checks, builds, integration tests, or smoke tests.
+- Do not weaken, delete, skip, or rewrite a valid test merely to make the implementation pass. Change an existing test only when the intended behavior has genuinely changed.
+- If a test fails, determine whether the failure was introduced by the current change or already existed. Fix failures caused by the current work. Report unrelated pre-existing failures without expanding the task unless they block validation.
+- Never claim that tests passed unless they were actually run successfully.
+
+Testing may be omitted for changes that cannot affect runtime behavior, such as comments or documentation. Briefly state why no test was necessary.
+
+If testing cannot be performed because of missing dependencies, unavailable services, credentials, environment limitations, or excessive cost, explain the exact limitation and perform the best available alternative check. Clearly distinguish verified behavior from behavior that remains unverified.
+
+Before finishing, report:
+
+- tests added or updated;
+- validation commands or checks performed;
+- results and any remaining unverified risks.
