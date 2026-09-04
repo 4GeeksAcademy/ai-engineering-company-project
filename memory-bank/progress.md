@@ -2,41 +2,45 @@
 
 ## Current state
 
-Error-handling implementation is **complete** (not archived). Guide remains at root [`error-handling-context.md`](../error-handling-context.md) until you ask to archive it. Branch `auth_api`.
+AUTH-088, API-042, and FE-019 are **implemented** on branch `bullet-proof`. Guide remains at root [`BulletProofApp-Context.md`](../BulletProofApp-Context.md) until you ask to archive it.
 
 ## Completed
 
-- Shared `toUserMessage` / `parseError` (no raw `detail` in UI), `ErrorBanner`, `uis/web` `app/error.tsx`, `apiFetch` timeout
-- Forgot-password catch + retry; AuthProvider 401 vs outage; auth forms; suppliers retry + row busy; IncidentAnalyzer uses `parseError`
-- FastAPI global sanitized 500; incident `LoadError` mapped to stable 400; supplier 422 `{detail, errors}`; Resend send failures stay 200
-- CLI export `OSError` → stderr + exit 1
+- AUTH-088 pytest suite + [`TESTING.md`](../TESTING.md) auth matrix (2026-08-31)
+- API-042: extended incident and supplier tests (happy / edge / failure)
+- FE-019: Jest in `uis/web` for token helpers, `messageForStatus`, `toUserMessage` / `parseError`
 
 ## Validation results
 
-- `cd services/api && python3 -m unittest discover -s tests -v`: **29 tests OK** (2026-08-28)
-- `cd scripts && python3 -m unittest discover -s tests -v`: **20 tests OK**
-- `npm run typecheck`: **passed**
-- Dev servers were started for local click-through (`uis/web` :3001, API :8000). Agent did not drive the browser.
+- `uv run pytest tests/test_incidents_api.py tests/test_suppliers_api.py`: **26 passed**, 1 Starlette TestClient deprecation warning (2026-09-04)
+- `uv run pytest --cov=app.routers.incidents --cov=app.routers.suppliers --cov=app.suppliers --cov-report=term-missing`: **80 passed**, **88%** on selected modules (target ≥60%)
+- AUTH-088 remains green in that full run (80 tests include the prior 68 auth/error cases)
+- `npm test -w uis/web`: **6 passed** (1 suite); `apiClient.ts` line coverage 56.55% on helpers (no % gate for FE-019)
+- `npm run typecheck -w uis/web`: passed
+- No application bug found; no production-code fix required
 
 ## Tests added or updated
 
-- New: `services/api/tests/test_error_handlers.py`, `services/api/tests/test_suppliers_api.py`
-- Updated: `test_incidents_api.py` (stable CSV 400), `test_auth_api.py` (forgot-password send failure still 200), `scripts/tests/test_analyze.py` (missing file, bad UTF-8, export I/O)
+- Incidents: `test_export_without_token_401`, `test_analyze_whitespace_only_csv_returns_400`
+- Suppliers: create/get/list/sort, patch rate/status, filters, skip unreadable doc, UK+GBP, unauthenticated 401, patch unknown 404
+- New: `uis/web/src/lib/__tests__/apiClient.test.ts`, `uis/web/jest.config.ts`, Jest script and devDependencies in `uis/web/package.json`
 
 ## Blockers
 
-- Live password-reset email still needs a local `.env` with `RESEND_API_KEY` if you want real inbox delivery.
+- None. Live Resend still needs a local `RESEND_API_KEY` for real inbox delivery (tests mock/skip send).
 
 ## Next steps
 
-1. When you confirm the phase is complete, move `error-handling-context.md` into `memory-bank/archive/`.
-2. Optionally keep smoking `uis/web` in the browser (forgot-password failure, API down on session, suppliers retry, incidents bad CSV).
+When you confirm the phase is complete, move `BulletProofApp-Context.md` into `memory-bank/archive/`.
 
 ## Run commands (durable)
 
 ```bash
 cd services/api
-python3 -m unittest discover -s tests -v
+uv sync --group dev
+uv run pytest
+uv run pytest --cov=app.auth --cov-report=term-missing
+uv run pytest --cov=app.routers.incidents --cov=app.routers.suppliers --cov=app.suppliers --cov-report=term-missing
 uvicorn app.main:app --reload --port 8000
 
 cd scripts
@@ -44,6 +48,7 @@ python3 -m unittest discover -s tests -v
 
 npm run dev:web
 npm run typecheck
+npm test -w uis/web
 ```
 
-Last updated: 2026-08-28
+Last updated: 2026-09-04

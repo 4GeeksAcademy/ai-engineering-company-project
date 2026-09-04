@@ -109,6 +109,21 @@ class IncidentsApiTest(unittest.TestCase):
         response = client.post("/api/incidents/analyze")
         self.assertEqual(response.status_code, 401)
 
+    def test_export_without_token_401(self) -> None:
+        response = client.get("/api/incidents/results/export")
+        self.assertEqual(response.status_code, 401)
+
+    def test_analyze_whitespace_only_csv_returns_400(self) -> None:
+        """Named .csv with only whitespace is empty after decode, not empty bytes."""
+        response = client.post(
+            "/api/incidents/analyze",
+            headers=self.headers,
+            files={"file": ("blank.csv", b" \n  \n", "text/csv")},
+        )
+        self.assertEqual(response.status_code, 400)
+        detail = response.json()["detail"]
+        self.assertIn("empty", detail.lower())
+
 
 if __name__ == "__main__":
     unittest.main()

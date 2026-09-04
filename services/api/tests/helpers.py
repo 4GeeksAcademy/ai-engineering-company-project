@@ -57,3 +57,21 @@ def auth_header(email: str = "alice@healthcore.example", password: str = "secret
     register(email=email, password=password)
     token = login(email=email, password=password).json()["access_token"]
     return {"Authorization": f"Bearer {token}"}
+
+
+def admin_header(
+    email: str = "admin@healthcore.example",
+    password: str = "adminpass",
+) -> dict[str, str]:
+    from app.auth.models import Role
+    from app.auth.security import hash_password
+    from app.auth.service import create_user
+
+    create_user(
+        email=email,
+        hashed_password=hash_password(password),
+        role=Role.admin,
+        name="Local Admin",
+    )
+    token = login(email=email, password=password).json()["access_token"]
+    return {"Authorization": f"Bearer {token}"}
