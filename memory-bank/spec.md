@@ -10,18 +10,15 @@
 6. **Testing and edge cases:** implementation and validation are one task. Add or update focused tests for new/changed behavior and bug fixes; prefer public interfaces; cover realistic edge cases; run the narrowest relevant checks first. Do not weaken tests to make code pass. If a check cannot be run, state the limitation and what remains unverified. Docs-only changes need no runtime tests.
 7. Shipped auth stays as documented in standing behavior below (TinyDB User/Profile, JWT bearer, `uis/web` localStorage, Resend reset). `uis/website` stays fully public. The AUTH course contract is archived — do not load it unless asked.
 8. Error-handling is archived — do not load it unless asked. User-facing errors remain sanitized (no raw `detail`, stacks, or status codes in the UI).
-9. Bullet-proof work follows root [`BulletProofApp-Context.md`](../BulletProofApp-Context.md). AUTH-088, API-042, and FE-019 are implemented. When the phase is complete, store the file in `memory-bank/archive/` and remove it from repo root.
+9. Bullet-proof test coverage is archived — do not load it unless asked. Run commands remain in [`TESTING.md`](../TESTING.md).
 
 ## Acceptance criteria
 
 - [x] Required memory-bank files exist at `memory-bank/` root.
-- [x] Completed iterations archived: `2026-07-29-monorepo-ai-frontend`, `2026-08-28-supplier-directory`, `2026-08-28-staff-auth`, `2026-08-31-error-handling`.
+- [x] Completed iterations archived: `2026-07-29-monorepo-ai-frontend`, `2026-08-28-supplier-directory`, `2026-08-28-staff-auth`, `2026-08-31-error-handling`, `2026-09-04-bullet-proof`.
 - [x] Project `AGENTS.md` points at the global memory-bank file names.
-- [x] Root `BulletProofApp-Context.md` exists with AUTH-088 requirements.
-- [x] AUTH-088: every auth endpoint has happy-path, edge-case, and failure-mode tests; `uv run pytest` passes; `app.auth` coverage ≥70%; [`TESTING.md`](../TESTING.md) records observed commands and results.
-- [x] Optional API-042: incidents and suppliers have happy/edge/failure tests; selected-module coverage ≥60%; results in [`TESTING.md`](../TESTING.md).
-- [x] Optional FE-019: three `uis/web` helpers have Jest happy/failure tests; `npm test -w uis/web` passes; results in [`TESTING.md`](../TESTING.md).
-- [ ] On completion, `BulletProofApp-Context.md` is moved into `memory-bank/archive/` (wait for user).
+- [x] AUTH-088 / API-042 / FE-019 implemented; results in [`TESTING.md`](../TESTING.md).
+- [x] `BulletProofApp-Context.md` moved to `memory-bank/archive/2026-09-04-bullet-proof/`.
 
 ## Interfaces / expected behavior (standing)
 
@@ -37,7 +34,7 @@
 ## Validation
 
 - Code changes: follow requirement 6; report tests added/updated, commands run, results, and unverified risks.
-- API: `uv run pytest` from `services/api`. AUTH-088 coverage: `uv run pytest --cov=app.auth`. API-042 coverage: `--cov=app.routers.incidents --cov=app.routers.suppliers --cov=app.suppliers`. `python3 -m unittest discover -s tests -v` remains a secondary runner.
-- UI: `npm run typecheck`. FE-019: `npm test -w uis/web`.
+- API: `uv run pytest` from `services/api`. Auth coverage: `uv run pytest --cov=app.auth`. Backoffice coverage: `--cov=app.routers.incidents --cov=app.routers.suppliers --cov=app.suppliers`.
+- UI: `npm run typecheck`. Frontend helpers: `npm test -w uis/web`.
 - Docs-only: confirm memory files present and `AGENTS.md` links resolve. No runtime test required.
 - Real Resend delivery requires a local `RESEND_API_KEY` (not in git).
